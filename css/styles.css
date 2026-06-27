@@ -119,12 +119,9 @@ body{
 /* ==========================
    HERO
 ========================== */
-.hero-section {
-    background: linear-gradient(rgba(249,247,242,.9), rgba(249,247,242,.9)), 
-                url('../assets/img/hero-bg.jpg');
-    /* Esto mantendrá la legibilidad y el tono crema que armoniza con la orquídea */
+.hero-section{
+    background: var(--cream);
 }
-
 .hero-badge{
     background:rgba(200,169,107,.15);
     color:var(--gold);

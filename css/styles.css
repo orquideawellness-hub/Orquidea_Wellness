@@ -1,0 +1,481 @@
+/* ==========================
+   VARIABLES - Paleta Orquídea Wellness
+========================== */
+:root {
+    --olive: #7E8670;       /* Verde suave inspirado en las hojas */
+    --olive-dark: #3F4639;  /* Verde profundo para contrastes y footer */
+    --gold: #B89C65;        /* Dorado del logo */
+    --gold-light: #D4C3A0;  /* Dorado suave para acentos */
+    --cream: #F9F7F2;       /* Fondo crema elegante */
+    --white: #FFFFFF;
+    --text: #333333;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --radius: 25px;         /* Ligeramente más redondeado para suavidad */
+    --transition: all 0.4s ease;
+}
+
+body.dark-mode {
+    --cream: #1A1C19;       /* Fondo oscuro con tono verde muy tenue */
+    --white: #262925;
+    --text: #EAEAE6;
+    --shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* ==========================
+   GENERAL
+========================== */
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:var(--cream);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:var(--transition);
+}
+
+.section-padding{
+    padding:100px 0;
+}
+
+.section-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:3rem;
+    color:var(--olive);
+    font-weight:700;
+}
+
+.section-subtitle{
+    color:#777;
+    max-width:700px;
+    margin:auto;
+}
+
+/* ==========================
+   NAVBAR ACTUALIZADO
+========================== */
+.navbar {
+    background-color: var(--olive-dark); 
+    backdrop-filter: blur(10px);
+    padding: 15px 0; /* Un poco más de aire */
+    border-bottom: 1px solid rgba(184, 156, 101, 0.2); /* Sutil línea dorada inferior */
+    transition: var(--transition);
+}
+
+.logo-navbar {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--gold); /* Un marco dorado para resaltar el logo */
+}
+
+.brand-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0;
+}
+
+.brand-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+}
+
+.nav-link {
+    color: var(--white) !important;
+    margin-left: 20px;
+    font-weight: 400;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--gold-light) !important;
+}
+
+/* Línea de selección más elegante */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 0;
+    height: 1.5px;
+    background: var(--gold);
+    transition: var(--transition);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ==========================
+   HERO
+========================== */
+.hero-section {
+    background: linear-gradient(rgba(249,247,242,.9), rgba(249,247,242,.9)), 
+                url('../assets/img/hero-bg.jpg');
+    /* Esto mantendrá la legibilidad y el tono crema que armoniza con la orquídea */
+}
+
+.hero-badge{
+    background:rgba(200,169,107,.15);
+    color:var(--gold);
+    padding:10px 18px;
+    border-radius:50px;
+    font-weight:600;
+}
+
+.hero-title{
+    font-family:'Cormorant Garamond',serif;
+    font-size:4rem;
+    color:var(--olive);
+    font-weight:700;
+    line-height:1.1;
+}
+
+.hero-text{
+    font-size:1.1rem;
+    color:#666;
+    margin-top:20px;
+}
+
+.hero-logo{
+    max-width:380px;
+    animation:float 4s ease-in-out infinite;
+}
+
+/* ==========================
+   BOTONES
+========================== */
+.btn-gold{
+    background:var(--gold);
+    color:white;
+    border:none;
+    border-radius:50px;
+    padding:12px 28px;
+    font-weight:600;
+    box-shadow:var(--shadow);
+}
+
+.btn-gold:hover{
+    background:var(--gold-light);
+    transform:translateY(-3px);
+    color:white;
+}
+
+.btn-outline-success{
+    border-radius:50px;
+    padding:12px 28px;
+}
+
+/* ==========================
+   CARDS
+========================== */
+.feature-card{
+    background:var(--white);
+    padding:35px 25px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    transition:var(--transition);
+    height:100%;
+}
+
+.feature-card:hover{
+    transform:translateY(-10px);
+}
+
+.feature-card i{
+    font-size:2.8rem;
+    color:var(--gold);
+    margin-bottom:20px;
+}
+
+.feature-card h4{
+    color:var(--olive);
+    margin-bottom:15px;
+    font-weight:600;
+}
+
+/* ==========================
+   SERVICIOS
+========================== */
+.filtro-btn{
+    margin:5px;
+    border-radius:30px;
+    border:2px solid var(--olive);
+    color:var(--olive);
+    padding:10px 20px;
+    transition:var(--transition);
+}
+
+.filtro-btn:hover,
+.filtro-btn.active{
+    background:var(--olive);
+    color:white;
+}
+
+.servicio-card{
+    background:var(--white);
+    border:none;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    transition:var(--transition);
+    height:100%;
+}
+
+.servicio-card:hover{
+    transform:translateY(-8px);
+}
+
+.servicio-header{
+    background:linear-gradient(
+        135deg,
+        var(--olive),
+        var(--olive-dark)
+    );
+
+    color:white;
+    padding:20px;
+}
+
+.servicio-body{
+    padding:25px;
+}
+
+.servicio-categoria{
+    color:var(--gold);
+    font-size:.9rem;
+    font-weight:600;
+    text-transform:uppercase;
+}
+
+.servicio-precio{
+    font-size:2rem;
+    font-weight:700;
+    color:var(--olive);
+}
+
+#buscarServicio{
+    border-radius:50px;
+    padding:15px 25px;
+    border:2px solid #ddd;
+}
+
+#buscarServicio:focus{
+    border-color:var(--gold);
+    box-shadow:none;
+}
+
+/* ==========================
+   PSICOLOGÍA
+========================== */
+.psychology-section{
+    background:linear-gradient(
+        180deg,
+        rgba(109,124,74,.08),
+        transparent
+    );
+}
+
+/* ==========================
+   FAQ
+========================== */
+.accordion-item{
+    border:none;
+    border-radius:15px !important;
+    overflow:hidden;
+    margin-bottom:15px;
+    box-shadow:var(--shadow);
+}
+
+.accordion-button{
+    font-weight:600;
+    color:var(--olive);
+}
+
+.accordion-button:not(.collapsed){
+    background:var(--olive);
+    color:white;
+}
+
+.accordion-button:focus{
+    box-shadow:none;
+}
+
+/* ==========================
+   FORMULARIO
+========================== */
+.contact-form{
+    background:var(--white);
+    padding:40px;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+}
+
+.form-control,
+.form-select{
+    border-radius:15px;
+    padding:15px;
+}
+
+.form-control:focus,
+.form-select:focus{
+    border-color:var(--gold);
+    box-shadow:none;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+.footer{
+    background:var(--olive-dark);
+    color:white;
+    padding:60px 0 30px;
+}
+
+.footer h5{
+    font-family:'Cormorant Garamond',serif;
+    font-size:2rem;
+}
+
+.social-icons i{
+    font-size:1.5rem;
+    margin:0 10px;
+    color:var(--gold-light);
+    transition:var(--transition);
+}
+
+.social-icons i:hover{
+    transform:translateY(-5px);
+}
+
+/* ==========================
+   WHATSAPP
+========================== */
+.whatsapp-float{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:65px;
+    height:65px;
+    background:#25D366;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:2rem;
+    box-shadow:var(--shadow);
+    z-index:999;
+    text-decoration:none;
+    transition:var(--transition);
+}
+
+.whatsapp-float:hover{
+    transform:scale(1.1);
+    color:white;
+}
+
+/* ==========================
+   ANIMACIONES
+========================== */
+@keyframes float{
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-15px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+}
+
+.fade-up{
+    opacity:0;
+    transform:translateY(40px);
+    transition:all .8s ease;
+}
+
+.fade-up.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+@media (max-width:991px){
+
+    .hero-title{
+        font-size:3rem;
+        text-align:center;
+    }
+
+    .hero-text{
+        text-align:center;
+    }
+
+    .hero-logo{
+        margin-top:40px;
+        max-width:280px;
+    }
+
+    .section-title{
+        font-size:2.5rem;
+    }
+}
+
+@media (max-width:768px){
+
+    .section-padding{
+        padding:70px 0;
+    }
+
+    .hero-title{
+        font-size:2.4rem;
+    }
+
+    .section-title{
+        font-size:2rem;
+    }
+
+    .contact-form{
+        padding:25px;
+    }
+
+    .logo-navbar{
+        width:50px;
+        height:50px;
+    }
+}
+
+@media (max-width:576px){
+
+    .hero-title{
+        font-size:2rem;
+    }
+
+    .btn-gold,
+    .btn-outline-success{
+        width:100%;
+        margin-bottom:10px;
+    }
+
+    .whatsapp-float{
+        width:58px;
+        height:58px;
+        font-size:1.7rem;
+    }
+}

@@ -19,6 +19,7 @@ body.dark-mode {
     --white: #262925;
     --text: #EAEAE6;
     --shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
 
 /* ==========================
    GENERAL
@@ -477,4 +478,4 @@ body{
         height:58px;
         font-size:1.7rem;
     }
-}}
+}

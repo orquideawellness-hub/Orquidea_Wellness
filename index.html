@@ -435,76 +435,45 @@
 
     <!-- CONTACTO -->
     <section id="contacto" class="section-padding">
-
         <div class="container">
-
             <div class="text-center mb-5">
-
                 <h2 class="section-title">
                     Reserva tu cita
                 </h2>
-
             </div>
-
             <div class="row justify-content-center">
-
                 <div class="col-lg-8">
-
-                    <form id="formCita" class="contact-form">
-
+                    <form action="https://formspree.io/f/xpqgrzky" method="POST" id="formCita" class="contact-form">
                         <div class="row">
-
                             <div class="col-md-6 mb-3">
-
-                                <input type="text" class="form-control" placeholder="Nombre completo" required>
-
+                                <input type="text" name="nombre" class="form-control" placeholder="Nombre completo"
+                                    required>
                             </div>
-
                             <div class="col-md-6 mb-3">
-
-                                <input type="tel" class="form-control" placeholder="Teléfono" required>
-
+                                <input type="tel" name="telefono" class="form-control" placeholder="Teléfono" required>
                             </div>
-
                         </div>
-
                         <div class="mb-3">
-
-                            <select class="form-select" required>
-
+                            <select name="servicio" class="form-select" required>
                                 <option value="">
                                     Seleccione un servicio
                                 </option>
-
-                                <option>Fisioterapia</option>
-                                <option>Cosmiatría</option>
-                                <option>Masajes</option>
-                                <option>Psicología</option>
-
+                                <option value="Fisioterapia">Fisioterapia</option>
+                                <option value="Cosmiatría">Cosmiatría</option>
+                                <option value="Masajes">Masajes</option>
+                                <option value="Psicología">Psicología</option>
                             </select>
-
                         </div>
-
                         <div class="mb-3">
-
-                            <textarea class="form-control" rows="4" placeholder="Mensaje"></textarea>
-
+                            <textarea name="mensaje" class="form-control" rows="4" placeholder="Mensaje"></textarea>
                         </div>
-
-                        <button class="btn btn-gold w-100">
-
+                        <button type="submit" class="btn btn-gold w-100">
                             Solicitar cita
-
                         </button>
-
                     </form>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
 

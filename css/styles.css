@@ -2,24 +2,23 @@
    VARIABLES - Paleta Orquídea Wellness
 ========================== */
 :root {
-    --olive: #7E8670;       /* Verde suave inspirado en las hojas */
-    --olive-dark: #3F4639;  /* Verde profundo para contrastes y footer */
-    --gold: #B89C65;        /* Dorado del logo */
-    --gold-light: #D4C3A0;  /* Dorado suave para acentos */
-    --cream: #F9F7F2;       /* Fondo crema elegante */
+    --olive: #7E8670;        /* Verde suave para acentos */
+    --olive-dark: #4A5144;   /* NUEVO: Verde profundo extraído directamente de tu logo */
+    --gold: #B89C65;         /* Dorado del logo */
+    --gold-light: #D4C3A0;   /* Dorado suave para acentos */
+    --cream: #F9F7F2;        /* Fondo crema elegante */
     --white: #FFFFFF;
     --text: #333333;
     --shadow: 0 10px 30px rgba(0,0,0,0.08);
-    --radius: 25px;         /* Ligeramente más redondeado para suavidad */
+    --radius: 25px;          /* Ligeramente más redondeado para suavidad */
     --transition: all 0.4s ease;
 }
 
 body.dark-mode {
-    --cream: #1A1C19;       /* Fondo oscuro con tono verde muy tenue */
+    --cream: #1A1C19;        /* Fondo oscuro con tono verde muy tenue */
     --white: #262925;
     --text: #EAEAE6;
     --shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
 
 /* ==========================
    GENERAL

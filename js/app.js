@@ -212,52 +212,90 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /* ==========================================
-       FORMULARIO
-    ========================================== */
+   FORMULARIO - FORMSPREE
+========================================== */
     if (formCita) {
 
-        formCita.addEventListener("submit", e => {
+        formCita.addEventListener("submit", async (e) => {
 
             e.preventDefault();
 
-            const nombre =
-                formCita.querySelector('input[type="text"]').value;
+            const boton = formCita.querySelector("button");
 
-            const telefono =
-                formCita.querySelector('input[type="tel"]').value;
+            boton.disabled = true;
+            boton.innerHTML = `
+    <span class="spinner-border spinner-border-sm me-2"></span>
+    Enviando...
+`;
 
-            const servicio =
-                formCita.querySelector("select").value;
+            try {
 
-            const mensajeExtra =
-                formCita.querySelector("textarea").value;
+                const respuesta = await fetch(formCita.action, {
 
-            if (!nombre || !telefono || !servicio) {
+                    method: "POST",
 
-                alert(
-                    "Por favor complete los campos obligatorios."
-                );
+                    body: new FormData(formCita),
 
-                return;
+                    headers: {
+                        "Accept": "application/json"
+                    }
+
+                });
+
+                if (respuesta.ok) {
+
+                    Swal.fire({
+
+                        icon: "success",
+
+                        title: "¡Solicitud enviada!",
+
+                        text: "Hemos recibido tu solicitud. Nos comunicaremos contigo muy pronto.",
+
+                        confirmButtonColor: "#B89C65"
+
+                    });
+
+                    formCita.reset();
+
+                } else {
+
+                    Swal.fire({
+
+                        icon: "error",
+
+                        title: "No se pudo enviar",
+
+                        text: "Inténtalo nuevamente en unos minutos.",
+
+                        confirmButtonColor: "#B89C65"
+
+                    });
+
+                }
+
+            } catch (error) {
+
+                Swal.fire({
+
+                    icon: "error",
+
+                    title: "Error de conexión",
+
+                    text: "Verifica tu conexión a Internet.",
+
+                    confirmButtonColor: "#B89C65"
+
+                });
+
             }
 
-            const mensaje = `
-Hola, deseo reservar una cita.
+            boton.disabled = false;
+            boton.innerHTML = `
+    <i class="bi bi-calendar-check me-2"></i>
+    Solicitar cita
+`;
 
-Nombre: ${nombre}
-Teléfono: ${telefono}
-Servicio: ${servicio}
-
-Mensaje:
-${mensajeExtra}
-            `;
-
-            const url =
-                `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensaje)}`;
-
-            window.open(url, "_blank");
-
-            formCita.reset();
         });
 
     }

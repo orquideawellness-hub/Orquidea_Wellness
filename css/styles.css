@@ -344,15 +344,23 @@ body{
     font-size:2rem;
 }
 
-.social-icons i{
-    font-size:1.5rem;
-    margin:0 10px;
-    color:var(--gold-light);
-    transition:var(--transition);
+.social-icons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:20px;
 }
 
-.social-icons i:hover{
-    transform:translateY(-5px);
+.social-icons a{
+    color:var(--gold-light);
+    font-size:1.6rem;
+    transition:var(--transition);
+    text-decoration:none;
+}
+
+.social-icons a:hover{
+    color:var(--gold);
+    transform:translateY(-5px) scale(1.1);
 }
 
 /* ==========================

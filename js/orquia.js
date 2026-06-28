@@ -1,11 +1,12 @@
-function enviarMensaje() {
+async function enviarMensaje() {
+
   const input = document.getElementById("inputChat");
   const chatBox = document.getElementById("chatBox");
 
   const mensaje = input.value.trim();
   if (!mensaje) return;
 
-  // 🟢 Mostrar mensaje del usuario
+  // 👤 mensaje usuario
   const userMsg = document.createElement("div");
   userMsg.className = "msg user";
   userMsg.innerHTML = mensaje;
@@ -13,37 +14,35 @@ function enviarMensaje() {
 
   input.value = "";
 
-  // 🔵 Simular respuesta de IA
-  setTimeout(() => {
-    const botMsg = document.createElement("div");
-    botMsg.className = "msg bot";
+  // ⏳ loader bot
+  const botMsg = document.createElement("div");
+  botMsg.className = "msg bot";
+  botMsg.innerHTML = "🌿 Orquía está pensando...";
+  chatBox.appendChild(botMsg);
 
-    botMsg.innerHTML = generarRespuestaIA(mensaje.toLowerCase());
-    chatBox.appendChild(botMsg);
+  chatBox.scrollTop = chatBox.scrollHeight;
 
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 600);
-}
+  try {
 
+    const response = await fetch("http://localhost:3000/api/ia/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        mensaje: mensaje
+      })
+    });
 
-// 🧠 Motor simple de respuesta tipo IA
-function generarRespuestaIA(texto) {
+    const data = await response.json();
 
-  if (texto.includes("estres") || texto.includes("ansiedad")) {
-    return "🌿 Entiendo tu estado. Te recomiendo una sesión de respiración profunda y masaje relajante para reducir tensión.";
+    botMsg.innerHTML = data.data;
+
+  } catch (error) {
+
+    botMsg.innerHTML = "⚠️ Error de conexión con Orquía";
+
   }
 
-  if (texto.includes("dolor") || texto.includes("musculo")) {
-    return "💆 Podría ayudarte un masaje terapéutico y estiramientos suaves. ¿Dónde sientes el dolor?";
-  }
-
-  if (texto.includes("cansado") || texto.includes("fatiga")) {
-    return "🌙 Tu cuerpo necesita descanso. Prioriza sueño profundo y desconexión digital.";
-  }
-
-  if (texto.includes("hola") || texto.includes("buenas")) {
-    return "✨ Hola, soy Orquía. Estoy aquí para ayudarte a equilibrar tu bienestar físico y emocional.";
-  }
-
-  return "🌸 Cuéntame un poco más para poder darte una recomendación más precisa sobre tu bienestar.";
+  chatBox.scrollTop = chatBox.scrollHeight;
 }

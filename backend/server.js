@@ -10,7 +10,7 @@ app.use(express.json());
 const iaRoutes = require("./routes/ia.routes");
 app.use("/api/ia", iaRoutes);
 
-const PORT = 3000;
+const PORT = 4000;
 
 app.listen(PORT, () => {
   console.log("Servidor Orquídea Wellness activo 🌿 en puerto", PORT);

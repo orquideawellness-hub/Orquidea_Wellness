@@ -1,4 +1,4 @@
-const service = require("../services/ia.services");
+const service = require("../services/ia.service");
 
 exports.chat = async (req, res) => {
 

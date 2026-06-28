@@ -5,9 +5,9 @@ const servicios = require("../data/servicios");
 
 exports.generarRespuesta = async (mensaje) => {
 
-  try {
+    try {
 
-    const systemPrompt = `
+        const systemPrompt = `
 Eres OrquIA, asistente virtual de bienestar.
 
 Tu objetivo:
@@ -21,36 +21,36 @@ ${JSON.stringify(servicios)}
 Si el usuario pregunta por tratamientos, recomienda opciones reales del listado.
     `;
 
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4o-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: mensaje }
-        ],
-        temperature: 0.7
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-          "Content-Type": "application/json"
+        const response = await axios.post(
+            "https://api.openai.com/v1/chat/completions",
+            {
+                model: "gpt-4o-mini",
+                messages: [
+                    { role: "system", content: systemPrompt },
+                    { role: "user", content: mensaje }
+                ],
+                temperature: 0.7
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const respuesta = response.data?.choices?.[0]?.message?.content;
+
+        if (!respuesta) {
+            return "Lo siento, no pude generar una respuesta en este momento.";
         }
-      }
-    );
 
-    const respuesta = response.data?.choices?.[0]?.message?.content;
+        return respuesta;
 
-    if (!respuesta) {
-      return "Lo siento, no pude generar una respuesta en este momento.";
+    } catch (error) {
+        console.error("🔥 ERROR COMPLETO OPENAI:");
+        console.error(error.response?.data || error.message);
+
+        return "Error al conectar con el servicio de IA.";
     }
-
-    return respuesta;
-
-  } catch (error) {
-
-    console.error("Error OpenAI:", error?.response?.data || error.message);
-
-    return "Error al conectar con el servicio de IA.";
-  }
 };

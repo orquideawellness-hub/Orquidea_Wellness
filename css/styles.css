@@ -149,6 +149,37 @@ body{
     animation:float 4s ease-in-out infinite;
 }
 
+.hero-section .btn-outline-warning{
+
+    border:2px solid #B89C65;
+    color:#B89C65;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.hero-section .btn-outline-warning:hover{
+
+    background:#B89C65;
+    color:#fff;
+
+}
+
+.hero-section .btn-outline-info{
+
+    border:2px solid #5DADE2;
+    color:#5DADE2;
+    font-weight:600;
+    transition:.3s;
+
+}
+
+.hero-section .btn-outline-info:hover{
+
+    background:#5DADE2;
+    color:#fff;
+
+}
 /* ==========================
    BOTONES
 ========================== */
@@ -483,6 +514,43 @@ body{
         height:58px;
         font-size:1.7rem;
     }
+}
+
+/*==========================================
+    MÓDULOS IA
+==========================================*/
+
+.nav-ia,
+.nav-orquia{
+
+    position:relative;
+
+    font-weight:600;
+
+}
+
+.nav-ia{
+
+    color:var(--gold-light)!important;
+
+}
+
+.nav-orquia{
+
+    color:#B8E3FF!important;
+
+}
+
+.nav-ia:hover{
+
+    color:#FFD77A!important;
+
+}
+
+.nav-orquia:hover{
+
+    color:#7FD7FF!important;
+
 }
 
 /*=========================

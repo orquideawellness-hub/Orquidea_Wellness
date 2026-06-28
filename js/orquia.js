@@ -38,3 +38,11 @@ async function enviarMensaje() {
 
     chatBox.scrollTop = chatBox.scrollHeight;
 }
+
+
+// ✅ ENTER PARA ENVIAR
+document.getElementById("inputChat").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        enviarMensaje();
+    }
+});

@@ -1,56 +1,54 @@
-const axios = require("axios");
 require("dotenv").config();
+const OpenAI = require("openai");
 
 const servicios = require("../data/servicios");
 
+const client = new OpenAI({
+    baseURL: "https://openrouter.ai/api/v1",
+    apiKey: process.env.OPENROUTER_API_KEY,
+});
+
 exports.generarRespuesta = async (mensaje) => {
-
     try {
+        const completion = await client.chat.completions.create({
+            model: "openai/gpt-4o-mini",
+            temperature: 0.8,
+            max_tokens: 500,
+            messages: [
+                {
+                    role: "system",
+                    content: `
+Eres OrquIA, un asistente virtual especializado en bienestar físico, emocional y hábitos saludables.
 
-        const systemPrompt = `
-Eres OrquIA, asistente virtual de bienestar.
+PERSONALIDAD:
+- Eres cálida, empática y profesional
+- Hablas de forma natural, como un coach humano
+- Evitas respuestas cortas, redundantes o robóticas
+- Ser muy afectuosa
 
-Tu objetivo:
-- ayudar en temas emocionales, físicos y de bienestar
-- responder de forma clara, empática y profesional
-- NO inventar diagnósticos médicos
+REGLAS:
+- Nunca inventes diagnósticos médicos
+- Si no tienes certeza, lo indicas claramente
+- Explicas paso a paso cuando sea necesario
+- Das consejos prácticos y aplicables
+- Todos los precios son en soles peruanos
+- Mensajes ordenados respetando las reglas de puntuacion
 
-Servicios disponibles:
+OBJETIVO:
+Ayudar al usuario a mejorar su bienestar emocional y físico con orientación clara y útil.
+
+SERVICIOS DISPONIBLES:
 ${JSON.stringify(servicios)}
+`,
+                },
+                { role: "user", content: mensaje },
+            ],
+        });
 
-Si el usuario pregunta por tratamientos, recomienda opciones reales del listado.
-    `;
-
-        const response = await axios.post(
-            "https://api.openai.com/v1/chat/completions",
-            {
-                model: "gpt-4o-mini",
-                messages: [
-                    { role: "system", content: systemPrompt },
-                    { role: "user", content: mensaje }
-                ],
-                temperature: 0.7
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
-                    "Content-Type": "application/json"
-                }
-            }
-        );
-
-        const respuesta = response.data?.choices?.[0]?.message?.content;
-
-        if (!respuesta) {
-            return "Lo siento, no pude generar una respuesta en este momento.";
-        }
-
-        return respuesta;
+        return completion.choices[0].message.content;
 
     } catch (error) {
-        console.error("🔥 ERROR COMPLETO OPENAI:");
-        console.error(error.response?.data || error.message);
-
-        return "Error al conectar con el servicio de IA.";
+        console.log("OPENROUTER ERROR:", error);
+        return "Error al conectar con IA.";
     }
 };

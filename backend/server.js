@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -12,6 +13,10 @@ app.use(express.json());
 const iaRoutes = require("./routes/ia.routes");
 app.use("/api/ia", iaRoutes);
 
+// 👉 SERVIR FRONTEND (HTML fuera del backend)
+app.use(express.static(path.join(__dirname, "../")));
+
+// PORT
 const PORT = 4000;
 
 app.listen(PORT, () => {

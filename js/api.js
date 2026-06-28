@@ -1,34 +1,33 @@
 const API = {
 
-  async simularRespuestaSimulador(texto) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
+  async enviarMensajeOrquia(mensaje) {
 
-        resolve({
-          ok: true,
-          data: {
-            respuesta: "Respuesta simulada desde API (listo para IA real)"
-          }
-        });
-
-      }, 600);
+    const response = await fetch("http://localhost:3000/api/ia/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ mensaje })
     });
+
+    const data = await response.json();
+
+    return data.data;
   },
 
-  async enviarMensajeOrquia(mensaje) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
+  async simularRespuestaSimulador(texto) {
 
-        resolve({
-          ok: true,
-          data: {
-            respuesta: "Respuesta simulada de Orquía (IA futura)"
-          }
-        });
-
-      }, 700);
-
+    const response = await fetch("http://localhost:3000/api/ia/simulador", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ texto })
     });
+
+    const data = await response.json();
+
+    return data.data;
   }
 
 };

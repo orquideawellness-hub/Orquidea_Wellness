@@ -17,14 +17,14 @@ async function enviarMensaje() {
   // ⏳ loader bot
   const botMsg = document.createElement("div");
   botMsg.className = "msg bot";
-  botMsg.innerHTML = "🌿 Orquía está pensando...";
+  botMsg.innerHTML = "🌿 OrquIA está pensando...";
   chatBox.appendChild(botMsg);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
 
-    const response = await fetch("http://localhost:3000/api/ia/chat", {
+    const response = await fetch("http://localhost:4000/api/ia/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -40,7 +40,7 @@ async function enviarMensaje() {
 
   } catch (error) {
 
-    botMsg.innerHTML = "⚠️ Error de conexión con Orquía";
+    botMsg.innerHTML = "⚠️ Error de conexión con OrquIA";
 
   }
 

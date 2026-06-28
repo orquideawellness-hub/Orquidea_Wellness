@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Simulador IA | Orquídea Wellness</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/simulador.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="./index.html">Inicio</a>
+    <a href="./simulador.html" class="active">Simulador IA</a>
+    <a href="./orquia.html">Orquía IA</a>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <main class="simulador-container">
+
+    <section class="simulador-header">
+      <h1>Simulador IA de Bienestar</h1>
+      <p>Describe cómo te sientes y recibe una recomendación personalizada.</p>
+    </section>
+
+    <!-- INPUT -->
+    <section class="simulador-input">
+      <textarea id="inputSimulador" placeholder="Ej: Me siento estresado, con tensión en el cuello..."></textarea>
+
+      <button onclick="ejecutarSimulador()">
+        Generar recomendación
+      </button>
+    </section>
+
+    <!-- RESULTADO -->
+    <section class="simulador-result">
+      <h2>Resultado</h2>
+      <div id="resultadoSimulador">
+        Aquí aparecerá tu recomendación...
+      </div>
+    </section>
+
+  </main>
+
+  <script src="./js/simulador.js"></script>
+
+</body>
+</html>

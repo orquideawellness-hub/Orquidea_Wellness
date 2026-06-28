@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Orquía IA | Chat</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/orquia.css">
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <a href="./index.html">Inicio</a>
+    <a href="./simulador.html">Simulador IA</a>
+    <a href="./orquia.html" class="active">Orquía IA</a>
+  </nav>
+
+  <!-- CHAT -->
+  <main class="chat-container">
+
+    <header class="chat-header">
+      <h1>Orquía IA</h1>
+      <p>Tu asistente de bienestar y terapias</p>
+    </header>
+
+    <!-- MENSAJES -->
+    <div id="chatBox" class="chat-box">
+      <div class="msg bot">
+        Hola 👋 soy Orquía. ¿Cómo te sientes hoy?
+      </div>
+    </div>
+
+    <!-- INPUT -->
+    <div class="chat-input">
+      <input type="text" id="inputChat" placeholder="Escribe tu mensaje..." />
+      <button onclick="enviarMensaje()">Enviar</button>
+    </div>
+
+  </main>
+
+  <script src="./js/orquia.js"></script>
+
+</body>
+</html>

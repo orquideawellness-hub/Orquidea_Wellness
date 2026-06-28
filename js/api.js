@@ -12,20 +12,11 @@ const API = {
 
     const data = await response.json();
 
-    return data.data;
-  },
+    console.log("BACKEND RAW:", data);
 
-  async simularRespuestaSimulador(texto) {
-
-    const response = await fetch("http://localhost:4000/api/ia/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ texto })
-    });
-
-    const data = await response.json();
+    if (!data.ok || !data.data) {
+      throw new Error(data.error || "Respuesta inválida del backend");
+    }
 
     return data.data;
   }

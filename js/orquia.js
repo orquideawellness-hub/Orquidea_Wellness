@@ -28,7 +28,7 @@ async function enviarMensaje() {
 
         console.log("RESPUESTA API:", respuesta);
 
-        botMsg.innerHTML = respuesta;
+        botMsg.innerHTML = respuesta || "⚠️ Sin respuesta del sistema";
 
     } catch (error) {
 

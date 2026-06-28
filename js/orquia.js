@@ -25,6 +25,9 @@ async function enviarMensaje() {
     try {
 
         const respuesta = await API.enviarMensajeOrquia(mensaje);
+
+        console.log("RESPUESTA API:", respuesta);
+
         botMsg.innerHTML = respuesta;
 
     } catch (error) {

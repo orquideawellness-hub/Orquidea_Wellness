@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const controller = require("../controllers/ia.controller");
 
-const iaController = require("../controllers/ia.controller");
-
-router.post("/simulador", iaController.simulador);
-router.post("/orquia", iaController.orquia);
+router.post("/chat", controller.chat);
 
 module.exports = router;

@@ -1,23 +1,21 @@
-const iaService = require("../services/ia.service");
+const service = require("../services/ia.service");
 
-exports.simulador = (req, res) => {
-  const { texto } = req.body;
+exports.chat = async (req, res) => {
 
-  const respuesta = iaService.simulador(texto);
+  try {
+    const { mensaje } = req.body;
 
-  res.json({
-    ok: true,
-    data: respuesta
-  });
-};
+    const respuesta = await service.generarRespuesta(mensaje);
 
-exports.orquia = (req, res) => {
-  const { mensaje } = req.body;
+    res.json({
+      ok: true,
+      data: respuesta
+    });
 
-  const respuesta = iaService.orquia(mensaje);
-
-  res.json({
-    ok: true,
-    data: respuesta
-  });
+  } catch (error) {
+    res.status(500).json({
+      ok: false,
+      error: "Error en IA"
+    });
+  }
 };

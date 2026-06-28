@@ -1,30 +1,39 @@
-exports.simulador = (texto) => {
+const axios = require("axios");
 
-  texto = texto.toLowerCase();
+const servicios = require("../data/servicios"); // opcional pero útil
 
-  if (texto.includes("estres") || texto.includes("ansiedad")) {
-    return "Respiración profunda + masaje relajante + aromaterapia";
-  }
+exports.generarRespuesta = async (mensaje) => {
 
-  if (texto.includes("dolor") || texto.includes("musculo")) {
-    return "Terapia física + estiramientos + calor local";
-  }
+  const systemPrompt = `
+Eres OrquIA, asistente virtual de bienestar.
 
-  return "Masaje relajante + equilibrio mente-cuerpo";
-};
+Tu objetivo:
+- ayudar en temas emocionales, físicos y de bienestar
+- responder de forma empática, clara y profesional
+- no inventar diagnósticos médicos
 
+Servicios disponibles:
+${JSON.stringify(servicios)}
 
-exports.orquia = (mensaje) => {
+Si el usuario pregunta por tratamientos, sugiere los servicios disponibles.
+  `;
 
-  mensaje = mensaje.toLowerCase();
+  const response = await axios.post(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: systemPrompt },
+        { role: "user", content: mensaje }
+      ]
+    },
+    {
+      headers: {
+        Authorization: `Bearer TU_API_KEY`,
+        "Content-Type": "application/json"
+      }
+    }
+  );
 
-  if (mensaje.includes("hola")) {
-    return "Hola 🌿 soy Orquía, ¿cómo te sientes hoy?";
-  }
-
-  if (mensaje.includes("estres")) {
-    return "Te recomiendo respiración guiada y una sesión relajante.";
-  }
-
-  return "Cuéntame un poco más para ayudarte mejor 🌸";
+  return response.data.choices[0].message.content;
 };

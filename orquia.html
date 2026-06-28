@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OrquIA | Chat</title>
 
-  <link rel="stylesheet" href="./css/styles.css">
-  <link rel="stylesheet" href="./css/orquia.css">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OrquIA | Chat</title>
+
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/orquia.css">
 </head>
 
 <body>
 
-  <!-- NAV -->
-  <nav class="navbar">
-    <a href="./index.html">Inicio</a>
-    <a href="./simulador.html">Simulador IA</a>
-    <a href="./orquia.html" class="active">Orquía IA</a>
-  </nav>
+    <!-- NAV -->
+    <nav class="navbar">
+        <a href="./index.html">Inicio</a>
+        <a href="./simulador.html">Simulador IA</a>
+        <a href="./orquia.html" class="active">Orquía IA</a>
+    </nav>
 
-  <!-- CHAT -->
-  <main class="chat-container">
+    <!-- CHAT -->
+    <main class="chat-container">
 
-    <header class="chat-header">
-      <h1>OrquIA</h1>
-      <p>Tu asistente de bienestar y mejora personal</p>
-    </header>
+        <header class="chat-header">
+            <h1>OrquIA</h1>
+            <p>Tu asistente de bienestar y mejora personal</p>
+        </header>
 
-    <!-- MENSAJES -->
-    <div id="chatBox" class="chat-box">
-      <div class="msg bot">
-        Hola 👋 soy OrquIA. ¿En qué te puedo ayudar hoy?
-      </div>
-    </div>
+        <!-- MENSAJES -->
+        <div id="chatBox" class="chat-box">
+            <div class="msg bot">
+                Hola 👋 soy OrquIA. ¿En qué te puedo ayudar hoy?
+            </div>
+        </div>
 
-    <!-- INPUT -->
-    <div class="chat-input">
-      <input type="text" id="inputChat" placeholder="Escribe tu mensaje..." />
-      <button onclick="enviarMensaje()">Enviar</button>
-    </div>
+        <!-- INPUT -->
+        <div class="chat-input">
+            <input type="text" id="inputChat" placeholder="Escribe tu mensaje..." />
+            <button onclick="enviarMensaje()">Enviar</button>
+        </div>
 
-  </main>
+    </main>
 
-  <script src="./js/orquia.js"></script>
+    <script src="./js/api.js"></script>
+    <script src="./js/orquia.js"></script>
 
 </body>
+
 </html>

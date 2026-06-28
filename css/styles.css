@@ -484,3 +484,163 @@ body{
         font-size:1.7rem;
     }
 }
+
+/*=========================
+PROMOCIONES
+==========================*/
+
+.promociones-section{
+
+    background:linear-gradient(
+        180deg,
+        rgba(184,156,101,.08),
+        transparent
+    );
+
+    overflow:hidden;
+
+}
+
+.promo-slider{
+
+    overflow:hidden;
+
+    width:100%;
+
+}
+
+.promo-track{
+
+    display:flex;
+
+    gap:30px;
+
+    width:max-content;
+
+    animation:scrollPromo 30s linear infinite;
+
+}
+
+.promo-slider:hover .promo-track{
+
+    animation-play-state:paused;
+
+}
+
+.promo-card{
+
+    width:320px;
+
+    flex-shrink:0;
+
+    background:var(--white);
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+    transition:.4s;
+
+    position:relative;
+
+}
+
+.promo-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.promo-img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+
+}
+
+.promo-body{
+
+    padding:25px;
+
+}
+
+.promo-body h4{
+
+    color:var(--olive);
+
+    margin-bottom:15px;
+
+}
+
+.promo-price{
+
+    margin-top:15px;
+
+    font-size:1.5rem;
+
+    color:var(--gold);
+
+    font-weight:700;
+
+}
+
+.promo-price del{
+
+    color:#999;
+
+    margin-right:10px;
+
+}
+
+.promo-badge{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    background:var(--gold);
+
+    color:white;
+
+    padding:8px 15px;
+
+    border-radius:30px;
+
+    font-size:.9rem;
+
+    font-weight:600;
+
+}
+
+@keyframes scrollPromo{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-50%);
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .promo-card{
+
+        width:270px;
+
+    }
+
+}

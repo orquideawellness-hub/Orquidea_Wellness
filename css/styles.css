@@ -522,42 +522,6 @@ body{
     }
 }
 
-/*==========================================
-    MÓDULOS IA
-==========================================*/
-
-.nav-ia,
-.nav-orquia{
-
-    position:relative;
-
-    font-weight:600;
-
-}
-
-.nav-ia{
-
-    color:var(--gold-light)!important;
-
-}
-
-.nav-orquia{
-
-    color:#B8E3FF!important;
-
-}
-
-.nav-ia:hover{
-
-    color:#FFD77A!important;
-
-}
-
-.nav-orquia:hover{
-
-    color:#7FD7FF!important;
-
-}
 
 /*=========================
 PROMOCIONES

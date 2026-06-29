@@ -1,16 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simulador IA | Orquídea Wellness</title>
 
-  <link rel="stylesheet" href="./css/styles.css">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulador IA | Orquídea Wellness</title>
+
+    <!-- SEO -->
+    <meta name="description"
+        content="Centro integral de bienestar especializado en fisioterapia, cosmiatría facial y corporal, terapias holísticas, masajes y orientación psicológica.">
+    <meta name="keywords" content="fisioterapia, cosmiatría, masajes, acupuntura, psicología, bienestar">
+    <meta name="author" content="Orquídea Wellness">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <link rel="icon" href="assets/icons/favicon.ico">
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top shadow-sm" id="navbar">
         <div class="container">
 
@@ -103,34 +124,35 @@
     </nav>
 
 
-  <!-- CONTENIDO -->
-  <main class="simulador-container">
+    <!-- CONTENIDO -->
+    <main class="simulador-container">
 
-    <section class="simulador-header">
-      <h1>Simulador IA de Bienestar</h1>
-      <p>Describe cómo te sientes y recibe una recomendación personalizada.</p>
-    </section>
+        <section class="simulador-header">
+            <h1>Simulador IA de Bienestar</h1>
+            <p>Describe cómo te sientes y recibe una recomendación personalizada.</p>
+        </section>
 
-    <!-- INPUT -->
-    <section class="simulador-input">
-      <textarea id="inputSimulador" placeholder="Ej: Me siento estresado, con tensión en el cuello..."></textarea>
+        <!-- INPUT -->
+        <section class="simulador-input">
+            <textarea id="inputSimulador" placeholder="Ej: Me siento estresado, con tensión en el cuello..."></textarea>
 
-      <button onclick="ejecutarSimulador()">
-        Generar recomendación
-      </button>
-    </section>
+            <button onclick="ejecutarSimulador()">
+                Generar recomendación
+            </button>
+        </section>
 
-    <!-- RESULTADO -->
-    <section class="simulador-result">
-      <h2>Resultado</h2>
-      <div id="resultadoSimulador">
-        Aquí aparecerá tu recomendación...
-      </div>
-    </section>
+        <!-- RESULTADO -->
+        <section class="simulador-result">
+            <h2>Resultado</h2>
+            <div id="resultadoSimulador">
+                Aquí aparecerá tu recomendación...
+            </div>
+        </section>
 
-  </main>
+    </main>
 
-  <script src="./js/simulador.js"></script>
+    <script src="./js/simulador.js"></script>
 
 </body>
+
 </html>

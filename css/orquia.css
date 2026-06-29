@@ -1,7 +1,14 @@
 .chat-container {
-  max-width: 800px;
-  margin: auto;
-  padding: 20px;
+  max-width: 900px;
+    margin: auto;
+    padding: 30px;
+    
+    /* Aplicamos el espacio aquí para compensar el fixed-top del navbar */
+    margin-top: 100px; 
+    
+    /* Opcional: Si quieres un poco más de aire arriba */
+    padding-top: 20px; 
+}
 }
 
 .chat-header {

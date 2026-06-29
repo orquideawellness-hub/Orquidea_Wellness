@@ -2,7 +2,7 @@ const API = {
 
   async enviarMensajeOrquia(mensaje) {
 
-    const response = await fetch("https://orquidea-wellness-vrwb.onrender.com/api/ia/chat", {
+    const response = await fetch("https://orquideawellness.onrender.com/api/ia/chat", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

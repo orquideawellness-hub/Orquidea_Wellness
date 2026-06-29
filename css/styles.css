@@ -57,10 +57,16 @@ body{
    NAVBAR ACTUALIZADO
 ========================== */
 .navbar {
-    background-color: var(--olive-dark); 
+    background-color: var(--olive-dark);
+    
+    /* Primero el prefijo para versiones anteriores de Safari */
+    -webkit-backdrop-filter: blur(10px);
+    
+    /* Luego la propiedad estándar para navegadores modernos */
     backdrop-filter: blur(10px);
-    padding: 15px 0; /* Un poco más de aire */
-    border-bottom: 1px solid rgba(184, 156, 101, 0.2); /* Sutil línea dorada inferior */
+    
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(184, 156, 101, 0.2);
     transition: var(--transition);
 }
 

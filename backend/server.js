@@ -3,9 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
+const helmet = require("helmet");
 const app = express();
-
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 // Configuración necesaria para trabajar detrás del proxy de Render
 app.set('trust proxy', 1);
 
@@ -17,7 +19,7 @@ const iaRoutes = require("./routes/ia.routes");
 app.use("/api/ia", iaRoutes);
 
 // 👉 SERVIR FRONTEND (Archivos HTML/CSS/JS fuera de la carpeta backend)
-app.use(express.static(path.join(__dirname, "../")));
+app.use(express.static(path.resolve(__dirname, "..")));
 
 // RUTA COMODÍN (SPA)
 // Asegura que si el usuario navega a una URL interna del frontend, 

@@ -140,7 +140,7 @@ body {
 .navbar-nav .nav-link {
     color: var(--white) !important;
     text-decoration: none !important;
-    margin-left: 20px;
+    margin-left: 8px;
     font-weight: 400;
     font-size: 0.95rem;
     transition: var(--transition);
@@ -168,7 +168,7 @@ body {
 ========================== */
 .hero-section {
     background: var(--cream);
-    padding-top: 140px;
+    padding-top: 150px;
 }
 
 .hero-badge {

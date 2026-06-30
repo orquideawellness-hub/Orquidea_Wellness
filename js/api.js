@@ -27,21 +27,19 @@ const API = {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({
-                tratamientos
-            })
+            body: JSON.stringify({ tratamientos })
         });
 
         const data = await response.json();
 
+        console.log("BACKEND SIMULADOR:", data);
+
         if (!data.ok) {
-            throw new Error(data.error);
+            throw new Error(data.error || "Error en simulador");
         }
 
-        return data;
-
+        return data; // ✔️ OK (tu backend devuelve plano)
     }
-
 };
 
 

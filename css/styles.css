@@ -196,8 +196,8 @@ body {
 .hero-title {
     font-family: 'Cormorant Garamond', serif;
     color: var(--olive);
-    line-height: 0.9; /* Un poco más cerrado para títulos grandes */
-    font-size: 3.0rem; /* Tamaño base para celulares */
+    line-height: 0.7; /* Un poco más cerrado para títulos grandes */
+    font-size: 2.5rem; /* Tamaño base para celulares */
 }
 
 .hero-text {

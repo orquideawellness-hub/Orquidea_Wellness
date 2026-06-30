@@ -1,20 +1,23 @@
 /* simulador.css */
 
+/* 1. Corrección del margen para el fixed-top navbar */
+/* Usamos main.container para asegurar que todo el contenido baje */
+main.container {
+    margin-top: 100px;
+    padding-bottom: 50px;
+}
+
+/* 2. Tu clase original (se mantiene pero con el ajuste de margen) */
 .simulador-container {
     max-width: 900px;
     margin: auto;
     padding: 30px;
-    
-    /* Aplicamos el espacio aquí para compensar el fixed-top del navbar */
-    margin-top: 100px; 
-    
-    /* Opcional: Si quieres un poco más de aire arriba */
-    padding-top: 20px; 
+    padding-top: 20px;
 }
 
 .simulador-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 40px; /* Aumentado para mejor aire */
 }
 
 .simulador-header h1 {
@@ -47,34 +50,46 @@
   margin-bottom: 10px;
   color: var(--olive-dark);
 }
+
 /* ==========================
    SIMULADOR - DARK MODE
 ========================== */
 
-body.dark-mode .simulador-header h1{
+body.dark-mode .simulador-header h1 {
     color: var(--gold);
 }
 
-body.dark-mode .simulador-header p{
+body.dark-mode .simulador-header p {
     color: #d6d6d6;
 }
 
-body.dark-mode .simulador-input textarea{
+body.dark-mode .simulador-input textarea {
     background: #2d333b;
     color: #ffffff;
     border: 1px solid #555;
 }
 
-body.dark-mode .simulador-input textarea::placeholder{
+body.dark-mode .simulador-input textarea::placeholder {
     color: #bdbdbd;
 }
 
-body.dark-mode .simulador-result{
+body.dark-mode .simulador-result {
     background: #1f242b;
     color: #f5f5f5;
     border: 1px solid #444;
 }
 
-body.dark-mode .simulador-result h2{
+body.dark-mode .simulador-result h2 {
+    color: var(--gold);
+}
+
+/* Ajuste adicional para las tarjetas de Bootstrap que usas en el HTML */
+body.dark-mode .card {
+    background: #1f242b;
+    color: #f5f5f5;
+    border: 1px solid #444;
+}
+
+body.dark-mode .card h3 {
     color: var(--gold);
 }

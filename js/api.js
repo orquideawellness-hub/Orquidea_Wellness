@@ -29,7 +29,7 @@ const API = {
 
     async ejecutarSimulador(tratamientos) {
 
-        const response = await fetch("http://localhost:4000/api/ia/simulador", {
+        const response = await fetch(`${API_BASE}/api/ia/simulador`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -37,10 +37,8 @@ const API = {
             body: JSON.stringify({ tratamientos })
         });
 
-        // 👇 Este sí es el log correcto
         console.log("STATUS:", response.status);
 
-        // Validar errores HTTP
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(errorText || "Error HTTP en simulador");

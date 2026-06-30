@@ -136,4 +136,21 @@ Está prohibido cualquier texto fuera del JSON.
             recomendaciones: []
         });
     }
+    exports.generarImagenSimulada = async (tratamientos, resumen) => {
+
+        // aquí NO usamos IA aún (evita costo y errores)
+        // generamos una imagen dinámica por tratamiento
+
+        let base = "https://placehold.co/600x800?text=";
+
+        let texto = "Wellness";
+
+        if (tratamientos.includes("Antiage")) texto = "Anti+Edad";
+        if (tratamientos.includes("Antiacné")) texto = "Anti+Acne";
+        if (tratamientos.includes("Pigmentación")) texto = "Piel+Uniforme";
+        if (tratamientos.includes("Hydrafacial")) texto = "Hydrafacial";
+        if (tratamientos.includes("Rosácea")) texto = "Piel+Sensitiva";
+
+        return base + encodeURIComponent(texto);
+    };
 };

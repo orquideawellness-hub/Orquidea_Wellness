@@ -54,73 +54,26 @@ exports.simulador = async (req, res) => {
       });
     }
 
-    // ===============================
-    // 1. IA: análisis
-    // ===============================
     const respuestaIA = await service.generarSimulacion(tratamientos);
 
-    if (!respuestaIA) {
-      return res.status(500).json({
-        ok: false,
-        error: "La IA no devolvió respuesta"
-      });
-    }
-
-    // ===============================
-    // 2. LIMPIEZA ROBUSTA
-    // ===============================
-    let jsonLimpio = respuestaIA
+    const jsonLimpio = respuestaIA
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
 
-    // extraer solo JSON real
-    const match = jsonLimpio.match(/\{[\s\S]*\}/);
+    const data = JSON.parse(jsonLimpio);
 
-    if (!match) {
-      console.error("❌ IA inválida:", respuestaIA);
+    const imagen = await service.generarImagenSimulada(tratamientos, data.resumen);
 
-      return res.status(500).json({
-        ok: false,
-        error: "La IA no devolvió JSON válido"
-      });
-    }
-
-    let data;
-
-    try {
-      data = JSON.parse(match[0]);
-    } catch (err) {
-
-      console.error("❌ Error parseando JSON:", respuestaIA);
-
-      return res.status(500).json({
-        ok: false,
-        error: "Error interpretando respuesta IA"
-      });
-    }
-
-    // ===============================
-    // 3. IMAGEN (SIMULADA O FUTURA IA VISUAL)
-    // ===============================
-    const imagenGenerada = await service.generarImagenSimulada?.(
-      tratamientos,
-      data.resumen
-    ) || "https://placehold.co/600x800?text=Resultado+IA";
-
-    // ===============================
-    // 4. RESPUESTA FINAL
-    // ===============================
     return res.json({
       ok: true,
-      imagen: imagenGenerada,
-      recomendaciones: data.recomendaciones || [],
-      resumen: data.resumen || ""
+      imagen,
+      resumen: data.resumen,
+      recomendaciones: data.recomendaciones
     });
 
   } catch (error) {
-
-    console.error("Error Simulador:", error);
+    console.error("ERROR SIMULADOR:", error);
 
     return res.status(500).json({
       ok: false,

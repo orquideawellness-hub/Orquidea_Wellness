@@ -1,24 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ===============================
-    // FOTO PREVIEW
+    // VALIDACIÓN API
     // ===============================
-    const fotoInput = document.getElementById("fotoInput");
-    const previewOriginal = document.getElementById("previewOriginal");
-
-    if (fotoInput && previewOriginal) {
-        fotoInput.addEventListener("change", function () {
-            const archivo = this.files[0];
-            if (!archivo) return;
-
-            previewOriginal.src = URL.createObjectURL(archivo);
-            previewOriginal.classList.remove("d-none");
-        });
+    if (typeof API === "undefined") {
+        console.error("❌ API no está definida (revisa api.js)");
+        return;
     }
 
     // ===============================
     // ELEMENTOS
     // ===============================
+    const fotoInput = document.getElementById("fotoInput");
+    const previewOriginal = document.getElementById("previewOriginal");
+
     const btnProbar = document.getElementById("btnProbar");
     const previewIA = document.getElementById("previewIA");
     const btnRecomendaciones = document.getElementById("btnRecomendaciones");
@@ -30,17 +25,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===============================
+    // PREVIEW IMAGEN ORIGINAL
+    // ===============================
+    if (fotoInput && previewOriginal) {
+        fotoInput.addEventListener("change", function () {
+            const archivo = this.files?.[0];
+            if (!archivo) return;
+
+            previewOriginal.src = URL.createObjectURL(archivo);
+            previewOriginal.classList.remove("d-none");
+        });
+    }
+
+    // ===============================
     // ESTADO INICIAL
     // ===============================
-    previewIA.classList.add("d-none");
-    btnRecomendaciones.classList.add("d-none");
-    recomendaciones.innerHTML = "";
-    recomendaciones.style.display = "none";
+    function resetUI() {
+        previewIA.classList.add("d-none");
+        previewIA.src = "";
+
+        recomendaciones.innerHTML = "";
+        recomendaciones.style.display = "none";
+
+        btnRecomendaciones.classList.add("d-none");
+        btnRecomendaciones.textContent = "Ver sugerencias adicionales";
+    }
+
+    resetUI();
+
+    let isLoading = false;
 
     // ===============================
     // BOTÓN PROBAR
     // ===============================
     btnProbar.addEventListener("click", async () => {
+
+        if (isLoading) return;
 
         const tratamientos = [...document.querySelectorAll(".tratamiento:checked")]
             .map(t => t.value);
@@ -51,13 +71,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
+            isLoading = true;
+            btnProbar.disabled = true;
+            btnProbar.textContent = "Procesando...";
+
+            resetUI();
 
             const resultado = await API.ejecutarSimulador(tratamientos);
 
             console.log("RESULTADO SIMULADOR:", resultado);
 
             // ===========================
-            // IMAGEN IA (SE MANTIENE)
+            // IMAGEN IA
             // ===========================
             if (resultado?.imagen) {
                 previewIA.src = resultado.imagen;
@@ -67,8 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // ===========================
             // RECOMENDACIONES
             // ===========================
-            recomendaciones.innerHTML = "";
-
             const lista = Array.isArray(resultado?.recomendaciones)
                 ? resultado.recomendaciones
                 : [];
@@ -79,17 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 recomendaciones.appendChild(li);
             });
 
-            // ===========================
-            // BOTÓN RECOMENDACIONES
-            // ===========================
             btnRecomendaciones.classList.remove("d-none");
-            btnRecomendaciones.textContent = "Ver sugerencias adicionales";
-
             recomendaciones.style.display = "none";
 
         } catch (err) {
             console.error("ERROR SIMULADOR:", err);
             alert("Error al ejecutar el simulador.");
+
+        } finally {
+            isLoading = false;
+            btnProbar.disabled = false;
+            btnProbar.textContent = "Probar simulación";
         }
     });
 
@@ -105,7 +128,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnRecomendaciones.textContent = oculto
             ? "Ocultar sugerencias"
             : "Ver sugerencias adicionales";
-
     });
 
 });

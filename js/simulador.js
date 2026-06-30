@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Llamada al endpoint PRO que procesa imágenes
             const response = await fetch(`${API_BASE}/api/ia/simulador-img`, {
                 method: "POST",
-                body: formData 
+                body: formData
             });
 
             const resultado = await response.json();
@@ -96,13 +96,16 @@ document.addEventListener("DOMContentLoaded", () => {
             // 🧬 SCORE CLÍNICO
             if (resultado.skinScore !== undefined) {
                 const scoreDiv = document.createElement("div");
-                const valoracion = resultado.metadata?.confidence || "media";
+                // Usamos resultado.condicion que viene del nuevo controlador
+                const condicion = resultado.condicion || "Evaluación en curso";
+
                 scoreDiv.innerHTML = `
-                    <div class="alert alert-info mt-3">
-                        <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
-                        <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
-                        <small>Valoración: ${valoracion}</small>
-                    </div>`;
+        <div class="alert alert-info mt-3">
+            <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
+            <p><strong>Estado de la piel:</strong> ${condicion}</p>
+            <small>Edad aparente estimada: ${resultado.metadata?.edadAparente || "N/A"} años</small>
+        </div>`;
+
                 document.getElementById("scoreContainer")?.replaceChildren(scoreDiv);
             }
 

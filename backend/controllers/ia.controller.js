@@ -38,10 +38,10 @@ exports.chat = async (req, res) => {
 exports.simulador = async (req, res) => {
   try {
     // Parseo de tratamientos (maneja tanto JSON directo como FormData)
-    const tratamientos = typeof req.body.tratamientos === 'string' 
-      ? JSON.parse(req.body.tratamientos) 
+    const tratamientos = typeof req.body.tratamientos === 'string'
+      ? JSON.parse(req.body.tratamientos)
       : req.body.tratamientos;
-      
+
     const file = req.file || null;
 
     if (!tratamientos?.length) {
@@ -67,8 +67,27 @@ exports.simulador = async (req, res) => {
       return res.status(500).json({ ok: false, error: "Error procesando respuesta de IA" });
     }
 
-    // 2. SKIN SCORE
-    const skinScore = Math.min(100, Math.max(60, Math.floor(Math.random() * 40) + 60));
+    // 2. SKIN SCORE Y CONDICIÓN CLÍNICA (Lógica basada en edad aparente)
+    // Simulación de edad aparente detectada por IA (entre 20 y 70 años)
+    const edadAparente = Math.floor(Math.random() * 50) + 20;
+    let skinScore;
+    let condicionTexto;
+
+    if (edadAparente < 30) {
+      skinScore = 95 - (edadAparente - 20); // Puntaje muy alto para piel joven
+      condicionTexto = "Piel radiante y luminosa"; // Sin palabras de envejecimiento
+    } else if (edadAparente < 40) {
+      skinScore = 85 - (edadAparente - 30); // Puntaje bueno para piel en transición
+      condicionTexto = "Piel con textura equilibrada"; // Sin palabras de envejecimiento
+    } else if (edadAparente === 40) {
+      skinScore = 60;
+      condicionTexto = "Envejecimiento moderado";
+    } else {
+      // A mayor edad aparente (>40), el puntaje baja desde 60
+      skinScore = Math.max(20, 60 - ((edadAparente - 40) * 2));
+      condicionTexto = "Envejecimiento avanzado";
+    }
+
     const map = { "Acné": "acné", "Rosácea": "rosácea", "Pigmentación": "manchas", "Antiage": "envejecimiento" };
     const labels = tratamientos.map(t => map[t]).filter(Boolean);
 
@@ -103,10 +122,12 @@ exports.simulador = async (req, res) => {
       resumen: data.resumen,
       recomendaciones: data.recomendaciones || [],
       skinScore,
+      condicion: condicionTexto, // Se envía la nueva condición calculada
       labels,
       metadata: {
         model: "clinic-pro-v1",
-        confidence: skinScore > 80 ? "alta" : "media"
+        edadAparente: edadAparente, // Útil para depuración
+        confidence: skinScore > 60 ? "alta" : "media"
       }
     });
 

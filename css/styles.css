@@ -2,55 +2,62 @@
    VARIABLES - Paleta Orquídea Wellness
 ========================== */
 :root {
-    --olive: #7E8670;        /* Verde suave para acentos */
-    --olive-dark: #4A5144;   /* NUEVO: Verde profundo extraído directamente de tu logo */
-    --gold: #B89C65;         /* Dorado del logo */
-    --gold-light: #D4C3A0;   /* Dorado suave para acentos */
-    --cream: #F9F7F2;        /* Fondo crema elegante */
+    --olive: #7E8670;
+    /* Verde suave para acentos */
+    --olive-dark: #4A5144;
+    /* NUEVO: Verde profundo extraído directamente de tu logo */
+    --gold: #B89C65;
+    /* Dorado del logo */
+    --gold-light: #D4C3A0;
+    /* Dorado suave para acentos */
+    --cream: #F9F7F2;
+    /* Fondo crema elegante */
     --white: #FFFFFF;
     --text: #333333;
-    --shadow: 0 10px 30px rgba(0,0,0,0.08);
-    --radius: 25px;          /* Ligeramente más redondeado para suavidad */
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --radius: 25px;
+    /* Ligeramente más redondeado para suavidad */
     --transition: all 0.4s ease;
 }
 
 body.dark-mode {
-    --cream: #1A1C19;        /* Fondo oscuro con tono verde muy tenue */
+    --cream: #1A1C19;
+    /* Fondo oscuro con tono verde muy tenue */
     --white: #262925;
     --text: #EAEAE6;
-    --shadow: 0 10px 30px rgba(0,0,0,0.5);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================
    GENERAL
 ========================== */
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    font-family:'Poppins',sans-serif;
-    background:var(--cream);
-    color:var(--text);
-    overflow-x:hidden;
-    transition:var(--transition);
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: var(--transition);
 }
 
-.section-padding{
-    padding:100px 0;
+.section-padding {
+    padding: 100px 0;
 }
 
-.section-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:3rem;
-    color:var(--olive);
-    font-weight:700;
+.section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--olive);
+    font-weight: 700;
 }
 
-.section-subtitle{
-    color:#777;
-    max-width:700px;
-    margin:auto;
+.section-subtitle {
+    color: #777;
+    max-width: 700px;
+    margin: auto;
 }
 
 /* ==========================
@@ -58,13 +65,13 @@ body{
 ========================== */
 .navbar {
     background-color: var(--olive-dark);
-    
+
     /* Primero el prefijo para versiones anteriores de Safari */
     -webkit-backdrop-filter: blur(10px);
-    
+
     /* Luego la propiedad estándar para navegadores modernos */
     backdrop-filter: blur(10px);
-    
+
     padding: 15px 0;
     border-bottom: 1px solid rgba(184, 156, 101, 0.2);
     transition: var(--transition);
@@ -75,7 +82,8 @@ body{
     height: 55px;
     object-fit: cover;
     border-radius: 50%;
-    border: 2px solid var(--gold); /* Un marco dorado para resaltar el logo */
+    border: 2px solid var(--gold);
+    /* Un marco dorado para resaltar el logo */
 }
 
 .brand-title {
@@ -142,7 +150,7 @@ body{
 }
 
 /* Eliminar el subrayado azul por defecto de Bootstrap */
-.navbar-nav .nav-link:focus, 
+.navbar-nav .nav-link:focus,
 .navbar-nav .nav-link:active {
     color: var(--white) !important;
     text-decoration: none !important;
@@ -156,404 +164,402 @@ body{
 /* ==========================
    HERO
 ========================== */
-.hero-section{
+.hero-section {
     background: var(--cream);
 }
-.hero-badge{
-    background:rgba(200,169,107,.15);
-    color:var(--gold);
-    padding:10px 18px;
-    border-radius:50px;
-    font-weight:600;
+
+.hero-badge {
+    background: rgba(200, 169, 107, .15);
+    color: var(--gold);
+    padding: 10px 18px;
+    border-radius: 50px;
+    font-weight: 600;
 }
 
-.hero-title{
-    font-family:'Cormorant Garamond',serif;
-    font-size:4rem;
-    color:var(--olive);
-    font-weight:700;
-    line-height:1.1;
+.hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--olive);
+    font-weight: 700;
+    line-height: 1.1;
 }
 
-.hero-text{
-    font-size:1.1rem;
-    color:#666;
-    margin-top:20px;
+.hero-text {
+    font-size: 1.1rem;
+    color: #666;
+    margin-top: 20px;
 }
 
-.hero-logo{
-    max-width:380px;
-    animation:float 4s ease-in-out infinite;
+.hero-logo {
+    max-width: 380px;
+    animation: float 4s ease-in-out infinite;
 }
 
-.hero-section .btn-outline-warning{
+.hero-section .btn-outline-warning {
 
-    border:2px solid #B89C65;
-    color:#B89C65;
-    font-weight:600;
-    transition:.3s;
-
-}
-
-.hero-section .btn-outline-warning:hover{
-
-    background:#B89C65;
-    color:#fff;
+    border: 2px solid #B89C65;
+    color: #B89C65;
+    font-weight: 600;
+    transition: .3s;
 
 }
 
-.hero-section .btn-outline-info{
+.hero-section .btn-outline-warning:hover {
 
-    border:2px solid #5DADE2;
-    color:#5DADE2;
-    font-weight:600;
-    transition:.3s;
+    background: #B89C65;
+    color: #fff;
 
 }
 
-.hero-section .btn-outline-info:hover{
+.hero-section .btn-outline-info {
 
-    background:#5DADE2;
-    color:#fff;
+    border: 2px solid #5DADE2;
+    color: #5DADE2;
+    font-weight: 600;
+    transition: .3s;
 
 }
 
-body.dark-mode .hero-section .text-muted{
-    color:#d6d6d6 !important;
+.hero-section .btn-outline-info:hover {
+
+    background: #5DADE2;
+    color: #fff;
+
 }
+
+body.dark-mode .hero-section .text-muted {
+    color: #d6d6d6 !important;
+}
+
 /* ==========================
    BOTONES
 ========================== */
-.btn-gold{
-    background:var(--gold);
-    color:white;
-    border:none;
-    border-radius:50px;
-    padding:12px 28px;
-    font-weight:600;
-    box-shadow:var(--shadow);
+.btn-gold {
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 28px;
+    font-weight: 600;
+    box-shadow: var(--shadow);
 }
 
-.btn-gold:hover{
-    background:var(--gold-light);
-    transform:translateY(-3px);
-    color:white;
+.btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-3px);
+    color: white;
 }
 
-.btn-outline-success{
-    border-radius:50px;
-    padding:12px 28px;
+.btn-outline-success {
+    border-radius: 50px;
+    padding: 12px 28px;
 }
 
 /* ==========================
    CARDS
 ========================== */
-.feature-card{
-    background:var(--white);
-    padding:35px 25px;
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    transition:var(--transition);
-    height:100%;
+.feature-card {
+    background: var(--white);
+    padding: 35px 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    height: 100%;
 }
 
-.feature-card:hover{
-    transform:translateY(-10px);
+.feature-card:hover {
+    transform: translateY(-10px);
 }
 
-.feature-card i{
-    font-size:2.8rem;
-    color:var(--gold);
-    margin-bottom:20px;
+.feature-card i {
+    font-size: 2.8rem;
+    color: var(--gold);
+    margin-bottom: 20px;
 }
 
-.feature-card h4{
-    color:var(--olive);
-    margin-bottom:15px;
-    font-weight:600;
+.feature-card h4 {
+    color: var(--olive);
+    margin-bottom: 15px;
+    font-weight: 600;
 }
 
 /* ==========================
    SERVICIOS
 ========================== */
-.filtro-btn{
-    margin:5px;
-    border-radius:30px;
-    border:2px solid var(--olive);
-    color:var(--olive);
-    padding:10px 20px;
-    transition:var(--transition);
+.filtro-btn {
+    margin: 5px;
+    border-radius: 30px;
+    border: 2px solid var(--olive);
+    color: var(--olive);
+    padding: 10px 20px;
+    transition: var(--transition);
 }
 
 .filtro-btn:hover,
-.filtro-btn.active{
-    background:var(--olive);
-    color:white;
+.filtro-btn.active {
+    background: var(--olive);
+    color: white;
 }
 
-.servicio-card{
-    background:var(--white);
-    border:none;
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    overflow:hidden;
-    transition:var(--transition);
-    height:100%;
+.servicio-card {
+    background: var(--white);
+    border: none;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    height: 100%;
 }
 
-.servicio-card:hover{
-    transform:translateY(-8px);
+.servicio-card:hover {
+    transform: translateY(-8px);
 }
 
-.servicio-header{
-    background:linear-gradient(
-        135deg,
-        var(--olive),
-        var(--olive-dark)
-    );
+.servicio-header {
+    background: linear-gradient(135deg,
+            var(--olive),
+            var(--olive-dark));
 
-    color:white;
-    padding:20px;
+    color: white;
+    padding: 20px;
 }
 
-.servicio-body{
-    padding:25px;
+.servicio-body {
+    padding: 25px;
 }
 
-.servicio-categoria{
-    color:var(--gold);
-    font-size:.9rem;
-    font-weight:600;
-    text-transform:uppercase;
+.servicio-categoria {
+    color: var(--gold);
+    font-size: .9rem;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
-.servicio-precio{
-    font-size:2rem;
-    font-weight:700;
-    color:var(--olive);
+.servicio-precio {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--olive);
 }
 
-#buscarServicio{
-    border-radius:50px;
-    padding:15px 25px;
-    border:2px solid #ddd;
+#buscarServicio {
+    border-radius: 50px;
+    padding: 15px 25px;
+    border: 2px solid #ddd;
 }
 
-#buscarServicio:focus{
-    border-color:var(--gold);
-    box-shadow:none;
+#buscarServicio:focus {
+    border-color: var(--gold);
+    box-shadow: none;
 }
 
 /* ==========================
    PSICOLOGÍA
 ========================== */
-.psychology-section{
-    background:linear-gradient(
-        180deg,
-        rgba(109,124,74,.08),
-        transparent
-    );
+.psychology-section {
+    background: linear-gradient(180deg,
+            rgba(109, 124, 74, .08),
+            transparent);
 }
 
 /* ==========================
    FAQ
 ========================== */
-.accordion-item{
-    border:none;
-    border-radius:15px !important;
-    overflow:hidden;
-    margin-bottom:15px;
-    box-shadow:var(--shadow);
+.accordion-item {
+    border: none;
+    border-radius: 15px !important;
+    overflow: hidden;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
 }
 
-.accordion-button{
-    font-weight:600;
-    color:var(--olive);
+.accordion-button {
+    font-weight: 600;
+    color: var(--olive);
 }
 
-.accordion-button:not(.collapsed){
-    background:var(--olive);
-    color:white;
+.accordion-button:not(.collapsed) {
+    background: var(--olive);
+    color: white;
 }
 
-.accordion-button:focus{
-    box-shadow:none;
+.accordion-button:focus {
+    box-shadow: none;
 }
 
 /* ==========================
    FORMULARIO
 ========================== */
-.contact-form{
-    background:var(--white);
-    padding:40px;
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
+.contact-form {
+    background: var(--white);
+    padding: 40px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
 .form-control,
-.form-select{
-    border-radius:15px;
-    padding:15px;
+.form-select {
+    border-radius: 15px;
+    padding: 15px;
 }
 
 .form-control:focus,
-.form-select:focus{
-    border-color:var(--gold);
-    box-shadow:none;
+.form-select:focus {
+    border-color: var(--gold);
+    box-shadow: none;
 }
 
 /* ==========================
    FOOTER
 ========================== */
-.footer{
-    background:var(--olive-dark);
-    color:white;
-    padding:60px 0 30px;
+.footer {
+    background: var(--olive-dark);
+    color: white;
+    padding: 60px 0 30px;
 }
 
-.footer h5{
-    font-family:'Cormorant Garamond',serif;
-    font-size:2rem;
+.footer h5 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
 }
 
-.social-icons{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:20px;
+.social-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
-.social-icons a{
-    color:var(--gold-light);
-    font-size:1.6rem;
-    transition:var(--transition);
-    text-decoration:none;
+.social-icons a {
+    color: var(--gold-light);
+    font-size: 1.6rem;
+    transition: var(--transition);
+    text-decoration: none;
 }
 
-.social-icons a:hover{
-    color:var(--gold);
-    transform:translateY(-5px) scale(1.1);
+.social-icons a:hover {
+    color: var(--gold);
+    transform: translateY(-5px) scale(1.1);
 }
 
 /* ==========================
    WHATSAPP
 ========================== */
-.whatsapp-float{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    width:65px;
-    height:65px;
-    background:#25D366;
-    color:white;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2rem;
-    box-shadow:var(--shadow);
-    z-index:999;
-    text-decoration:none;
-    transition:var(--transition);
+.whatsapp-float {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    width: 65px;
+    height: 65px;
+    background: #25D366;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    box-shadow: var(--shadow);
+    z-index: 999;
+    text-decoration: none;
+    transition: var(--transition);
 }
 
-.whatsapp-float:hover{
-    transform:scale(1.1);
-    color:white;
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    color: white;
 }
 
 /* ==========================
    ANIMACIONES
 ========================== */
-@keyframes float{
-    0%{
-        transform:translateY(0);
+@keyframes float {
+    0% {
+        transform: translateY(0);
     }
 
-    50%{
-        transform:translateY(-15px);
+    50% {
+        transform: translateY(-15px);
     }
 
-    100%{
-        transform:translateY(0);
+    100% {
+        transform: translateY(0);
     }
 }
 
-.fade-up{
-    opacity:0;
-    transform:translateY(40px);
-    transition:all .8s ease;
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all .8s ease;
 }
 
-.fade-up.show{
-    opacity:1;
-    transform:translateY(0);
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ==========================
    RESPONSIVE
 ========================== */
-@media (max-width:991px){
+@media (max-width:991px) {
 
-    .hero-title{
-        font-size:3rem;
-        text-align:center;
+    .hero-title {
+        font-size: 3rem;
+        text-align: center;
     }
 
-    .hero-text{
-        text-align:center;
+    .hero-text {
+        text-align: center;
     }
 
-    .hero-logo{
-        margin-top:40px;
-        max-width:280px;
+    .hero-logo {
+        margin-top: 40px;
+        max-width: 280px;
     }
 
-    .section-title{
-        font-size:2.5rem;
-    }
-}
-
-@media (max-width:768px){
-
-    .section-padding{
-        padding:70px 0;
-    }
-
-    .hero-title{
-        font-size:2.4rem;
-    }
-
-    .section-title{
-        font-size:2rem;
-    }
-
-    .contact-form{
-        padding:25px;
-    }
-
-    .logo-navbar{
-        width:50px;
-        height:50px;
+    .section-title {
+        font-size: 2.5rem;
     }
 }
 
-@media (max-width:576px){
+@media (max-width:768px) {
 
-    .hero-title{
-        font-size:2rem;
+    .section-padding {
+        padding: 70px 0;
+    }
+
+    .hero-title {
+        font-size: 2.4rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .contact-form {
+        padding: 25px;
+    }
+
+    .logo-navbar {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width:576px) {
+
+    .hero-title {
+        font-size: 2rem;
     }
 
     .btn-gold,
-    .btn-outline-success{
-        width:100%;
-        margin-bottom:10px;
+    .btn-outline-success {
+        width: 100%;
+        margin-bottom: 10px;
     }
 
-    .whatsapp-float{
-        width:58px;
-        height:58px;
-        font-size:1.7rem;
+    .whatsapp-float {
+        width: 58px;
+        height: 58px;
+        font-size: 1.7rem;
     }
 }
 
@@ -562,171 +568,172 @@ body.dark-mode .hero-section .text-muted{
 PROMOCIONES
 ==========================*/
 
-.promociones-section{
+.promociones-section {
 
-    background:linear-gradient(
-        180deg,
-        rgba(184,156,101,.08),
-        transparent
-    );
+    background: linear-gradient(180deg,
+            rgba(184, 156, 101, .08),
+            transparent);
 
-    overflow:hidden;
+    overflow: hidden;
 
 }
 
-.promo-slider{
+.promo-slider {
 
-    overflow:hidden;
+    overflow: hidden;
 
-    width:100%;
-
-}
-
-.promo-track{
-
-    display:flex;
-
-    gap:30px;
-
-    width:max-content;
-
-    animation:scrollPromo 30s linear infinite;
+    width: 100%;
 
 }
 
-.promo-slider:hover .promo-track{
+.promo-track {
 
-    animation-play-state:paused;
+    display: flex;
 
-}
+    gap: 30px;
 
-.promo-card{
+    width: max-content;
 
-    width:320px;
-
-    flex-shrink:0;
-
-    background:var(--white);
-
-    border-radius:25px;
-
-    overflow:hidden;
-
-    box-shadow:var(--shadow);
-
-    transition:.4s;
-
-    position:relative;
+    animation: scrollPromo 30s linear infinite;
 
 }
 
-.promo-card:hover{
+.promo-slider:hover .promo-track {
 
-    transform:translateY(-8px);
-
-}
-
-.promo-img{
-
-    width:100%;
-
-    height:220px;
-
-    object-fit:cover;
+    animation-play-state: paused;
 
 }
 
-.promo-body{
+.promo-card {
 
-    padding:25px;
+    width: 320px;
 
-}
+    flex-shrink: 0;
 
-.promo-body h4{
+    background: var(--white);
 
-    color:var(--olive);
+    border-radius: 25px;
 
-    margin-bottom:15px;
+    overflow: hidden;
 
-}
+    box-shadow: var(--shadow);
 
-.promo-price{
+    transition: .4s;
 
-    margin-top:15px;
-
-    font-size:1.5rem;
-
-    color:var(--gold);
-
-    font-weight:700;
+    position: relative;
 
 }
 
-.promo-price del{
+.promo-card:hover {
 
-    color:#999;
-
-    margin-right:10px;
+    transform: translateY(-8px);
 
 }
 
-.promo-badge{
+.promo-img {
 
-    position:absolute;
+    width: 100%;
 
-    top:15px;
+    height: 220px;
 
-    right:15px;
-
-    background:var(--gold);
-
-    color:white;
-
-    padding:8px 15px;
-
-    border-radius:30px;
-
-    font-size:.9rem;
-
-    font-weight:600;
+    object-fit: cover;
 
 }
 
-@keyframes scrollPromo{
+.promo-body {
 
-    from{
+    padding: 25px;
 
-        transform:translateX(0);
+}
+
+.promo-body h4 {
+
+    color: var(--olive);
+
+    margin-bottom: 15px;
+
+}
+
+.promo-price {
+
+    margin-top: 15px;
+
+    font-size: 1.5rem;
+
+    color: var(--gold);
+
+    font-weight: 700;
+
+}
+
+.promo-price del {
+
+    color: #999;
+
+    margin-right: 10px;
+
+}
+
+.promo-badge {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    background: var(--gold);
+
+    color: white;
+
+    padding: 8px 15px;
+
+    border-radius: 30px;
+
+    font-size: .9rem;
+
+    font-weight: 600;
+
+}
+
+@keyframes scrollPromo {
+
+    from {
+
+        transform: translateX(0);
 
     }
 
-    to{
+    to {
 
-        transform:translateX(-50%);
-
-    }
-
-}
-
-@media(max-width:768px){
-
-    .promo-card{
-
-        width:270px;
+        transform: translateX(-50%);
 
     }
 
 }
+
+@media(max-width:768px) {
+
+    .promo-card {
+
+        width: 270px;
+
+    }
+
+}
+
 /* ==========================
    BOTÓN VOLVER ARRIBA
 ========================== */
 
-.scroll-top{
+.scroll-top {
     position: fixed;
     right: 25px;
-    bottom: 95px;          /* encima del WhatsApp */
-    width: 55px;
-    height: 55px;
+    bottom: 105px;
+    /* 25px del WhatsApp + 65px de alto + 10px de separación */
+
+    width: 65px;
+    height: 65px;
 
     display: flex;
     justify-content: center;
@@ -738,26 +745,46 @@ PROMOCIONES
     color: white;
 
     text-decoration: none;
-    font-size: 22px;
+    font-size: 1.8rem;
+    line-height: 1;
 
-    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+    box-shadow: var(--shadow);
 
     opacity: 0;
     visibility: hidden;
     transform: translateY(15px);
 
-    transition: .35s;
+    transition: var(--transition);
     z-index: 999;
 }
 
 .scroll-top:hover{
     background: var(--olive-dark);
     color: white;
-    transform: translateY(-4px);
+    transform: translateY(-4px) scale(1.08);
 }
 
-.scroll-top.show{
+.scroll-top.show {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+}
+/* Modo oscuro */
+body.dark-mode .scroll-top{
+    background: var(--olive-dark);
+}
+
+body.dark-mode .scroll-top:hover{
+    background: var(--gold);
+}
+@media (max-width:576px) {
+
+    .scroll-top {
+        width: 58px;
+        height: 58px;
+        font-size: 1.7rem;
+        bottom: 91px;
+        /* 25 + 58 + 8 */
+    }
+
 }

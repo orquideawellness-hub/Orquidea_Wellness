@@ -177,13 +177,17 @@ body {
 ========================== */
 .hero-section {
     background: var(--cream);
-    padding-top: 10px;
+    /* Reduce este valor. 10px hará que la sección suba mucho más. 
+       Prueba con 80px o 100px para empezar a notar el cambio. */
+    padding-top: 80px; 
+    min-height: 100vh; /* Asegura que la sección cubra la pantalla */
+    display: flex;
+    align-items: center;
 }
 
 .hero-badge {
     background: rgba(200, 169, 107, .15);
     color: var(--gold);
-    margin-top: 0 !important;
     padding: 10px 18px;
     border-radius: 50px;
     font-weight: 600;

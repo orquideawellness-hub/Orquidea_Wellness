@@ -717,3 +717,47 @@ PROMOCIONES
     }
 
 }
+/* ==========================
+   BOTÓN VOLVER ARRIBA
+========================== */
+
+.scroll-top{
+    position: fixed;
+    right: 25px;
+    bottom: 95px;          /* encima del WhatsApp */
+    width: 55px;
+    height: 55px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    background: var(--gold);
+    color: white;
+
+    text-decoration: none;
+    font-size: 22px;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.2);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+
+    transition: .35s;
+    z-index: 999;
+}
+
+.scroll-top:hover{
+    background: var(--olive-dark);
+    color: white;
+    transform: translateY(-4px);
+}
+
+.scroll-top.show{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

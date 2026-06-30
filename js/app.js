@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const darkModeBtn = document.getElementById("darkModeBtn");
     const whatsappBtn = document.getElementById("whatsappBtn");
     const formCita = document.getElementById("formCita");
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
 
     let categoriaActual = "Todos";
 
@@ -361,3 +362,20 @@ document.addEventListener("DOMContentLoaded", () => {
     renderizarServicios(servicios);
 
 });
+/* ==========================================
+   BOTÓN VOLVER ARRIBA
+========================================== */
+
+if (scrollTopBtn) {
+
+    window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 500) {
+            scrollTopBtn.classList.add("show");
+        } else {
+            scrollTopBtn.classList.remove("show");
+        }
+
+    });
+
+}

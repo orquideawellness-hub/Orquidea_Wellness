@@ -1,47 +1,24 @@
-require("dotenv").config();
-
 exports.generarImagen = async (tratamientos, resumen) => {
 
-    try {
+    const tratamientosTexto = Array.isArray(tratamientos)
+        ? tratamientos.join(", ")
+        : String(tratamientos || "");
 
-        const prompt = `
-dermatology clinical photography, realistic human portrait,
-neutral adult patient, professional clinic lighting,
-skin analysis aesthetic, ultra realistic 4k,
+    const prompt = `
+dermatology clinical photography, realistic medical portrait,
+adult patient, neutral expression, front view,
+clean clinical white background, soft studio lighting,
+high detail skin texture, realistic skin pores,
 
 condition: ${resumen},
-treatments: ${Array.isArray(tratamientos) ? tratamientos.join(", ") : tratamientos}
+treatments: ${tratamientosTexto},
+
+professional skincare before and after,
+ultra realistic, 4k, sharp focus, medical aesthetic
 `;
 
-        const response = await fetch(
-            "https://api-inference.huggingface.co/models/stabilityai/stable-diffusion-xl-base-1.0",
-            {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${process.env.HF_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    inputs: prompt
-                })
-            }
-        );
+    // 🔥 SERVICIO GRATIS (SIN API KEY)
+    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
 
-        console.log("STATUS IMAGE:", response.status);
-
-        if (!response.ok) {
-            const err = await response.text();
-            throw new Error(err);
-        }
-
-        const buffer = await response.arrayBuffer();
-        const base64 = Buffer.from(buffer).toString("base64");
-
-        return `data:image/png;base64,${base64}`;
-
-    } catch (error) {
-        console.error("❌ HF IMAGE ERROR:", error.message);
-
-        return "https://placehold.co/600x800?text=Sin+IA";
-    }
+    return url;
 };

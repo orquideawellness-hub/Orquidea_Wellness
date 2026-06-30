@@ -47,6 +47,7 @@ btnProbar.addEventListener("click", async () => {
     try {
 
         const resultado = await API.ejecutarSimulador(tratamientos);
+        console.log("RESULTADO SIMULADOR:", resultado);
 
         // Imagen de resultado (por ahora es una imagen de prueba)
         previewIA.src = resultado.imagen;

@@ -1,61 +1,44 @@
 require("dotenv").config();
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const axios = require("axios");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// 🔥 MODELO (puedes cambiarlo luego)
+const HF_MODEL = "black-forest-labs/FLUX.1-dev";
 
-exports.generarImagen = async (tratamientos, resumen, base64Image = null) => {
+exports.generarImagen = async (tratamientos, resumen) => {
     try {
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash"
-        });
-
         const prompt = `
-Eres un editor de imágenes dermatológicas profesionales.
+Professional dermatology skincare photography.
 
-Tarea:
-Mejorar la apariencia de la piel del paciente manteniendo exactamente la misma persona.
+Patient treatments: ${tratamientos.join(", ")}.
+Skin condition: ${resumen}.
 
-Tratamientos aplicados:
-${tratamientos.join(", ")}
-
-Condición:
-${resumen}
-
-Instrucciones:
-- Mantén la identidad facial intacta
-- Mejora textura de piel
-- Reduce rojeces o imperfecciones
-- Resultado tipo clínica estética profesional
+Ultra realistic clinic portrait, soft lighting, high detail, 4k, natural skin texture, before and after aesthetic.
 `;
 
-        // 🔴 SI NO HAY IMAGEN, FALLBACK
-        if (!base64Image) {
-            return "https://placehold.co/600x800?text=Sin+Imagen";
-        }
-
-        const result = await model.generateContent([
-            prompt,
+        const response = await axios.post(
+            `https://api-inference.huggingface.co/models/${HF_MODEL}`,
             {
-                inlineData: {
-                    data: base64Image,
-                    mimeType: "image/jpeg"
-                }
+                inputs: prompt
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.HF_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                responseType: "arraybuffer"
             }
-        ]);
+        );
 
-        const response = await result.response;
-        const text = response.text();
+        console.log("STATUS HF:", response.status);
 
-        // Gemini devuelve instrucciones o descripción, no imagen directa
-        // (esto lo ajustamos después con endpoint de imagen si lo activas)
+        const base64 = Buffer.from(response.data).toString("base64");
 
-        console.log("GEMINI RESPONSE:", text);
-
-        return "https://placehold.co/600x800?text=Gemini+OK";
+        return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-        console.error("❌ GEMINI ERROR:", error.message);
-        return "https://placehold.co/600x800?text=Error";
+        console.error("❌ HUGGING FACE ERROR:", error.response?.data || error.message);
+
+        return "https://placehold.co/600x800?text=Sin+IA";
     }
 };

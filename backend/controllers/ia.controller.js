@@ -43,34 +43,38 @@ exports.simulador = async (req, res) => {
 
     const { tratamientos } = req.body;
 
-    if (!tratamientos || tratamientos.length === 0) {
+    if (!tratamientos?.length) {
       return res.status(400).json({
         ok: false,
         error: "Debe seleccionar al menos un tratamiento."
       });
     }
 
-    // Por ahora solo devolvemos datos de prueba
-    res.json({
+    // 1. IA análisis
+    const respuestaIA = await service.generarSimulacion(tratamientos);
+
+    const jsonLimpio = respuestaIA
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    const data = JSON.parse(jsonLimpio);
+
+    // 2. 🔴 AQUÍ FALTA TU PIEZA CLAVE (IMAGEN IA)
+    // esto NO lo tienes aún implementado
+    const imagenGenerada = await service.generarImagenSimulada(tratamientos, data.resumen);
+
+    return res.json({
       ok: true,
-      imagen: "https://placehold.co/600x800?text=Resultado+IA",
-      recomendaciones: [
-        "Dormir entre 7 y 8 horas.",
-        "Beber al menos 2 litros de agua al día.",
-        "Usar protector solar diariamente.",
-        "Mantener una alimentación equilibrada."
-      ]
+      imagen: imagenGenerada,
+      recomendaciones: data.recomendaciones
     });
 
   } catch (error) {
-
-    console.error("Error Simulador:", error);
-
-    res.status(500).json({
+    console.error(error);
+    return res.status(500).json({
       ok: false,
-      error: "Error en simulador IA."
+      error: "Error en simulador IA"
     });
-
   }
-
 };

@@ -9,6 +9,7 @@
     <!-- SEO -->
     <meta name="description"
         content="Centro integral de bienestar especializado en fisioterapia, cosmiatría facial y corporal, terapias holísticas, masajes y orientación psicológica.">
+
     <meta name="keywords" content="fisioterapia, cosmiatría, masajes, acupuntura, psicología, bienestar">
     <meta name="author" content="Orquídea Wellness">
 
@@ -19,8 +20,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
         rel="stylesheet">
 
     <!-- CSS -->
@@ -45,39 +45,6 @@
                 </div>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-
-                <span class="navbar-toggler-icon"></span>
-
-            </button>
-
-            <div class="collapse navbar-collapse" id="menu">
-
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="orquia.html">
-                            <i class="bi bi-robot me-1"></i> OrquIA
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="simulador.html">
-                            <i class="bi bi-stars me-1"></i> Simulador IA
-                        </a>
-                    </li>
-                </ul>
-
-                <button class="btn btn-outline-light ms-lg-3" id="darkModeBtn" aria-label="Cambiar modo oscuro"
-                    title="Cambiar modo oscuro">
-
-                    <i class="bi bi-moon-stars-fill"></i>
-
-                </button>
-
-            </div>
-
         </div>
     </nav>
 
@@ -87,124 +54,94 @@
 
         <div class="row g-4">
 
-            <!-- SUBIR FOTO -->
+            <!-- FOTO -->
             <div class="col-lg-4">
-
                 <div class="card shadow-sm p-4 h-100">
 
-                    <h3 class="mb-4">
-                        1. Sube tu foto
-                    </h3>
+                    <h3 class="mb-4">1. Sube tu foto</h3>
 
                     <input type="file" id="fotoInput" accept="image/*" class="form-control mb-3">
 
-                    <img id="previewOriginal" class="img-fluid rounded d-none" alt="Vista previa">
+                    <img id="previewOriginal" class="img-fluid rounded d-none" alt="Foto original del usuario">
 
                 </div>
-
             </div>
 
             <!-- TRATAMIENTOS -->
             <div class="col-lg-4">
-
                 <div class="card shadow-sm p-4 h-100">
 
-                    <h3 class="mb-4">
-                        2. Selecciona tratamientos
-                    </h3>
+                    <h3 class="mb-4">2. Selecciona tratamientos</h3>
 
                     <div class="form-check">
                         <input class="form-check-input tratamiento" type="checkbox" value="Antiage">
-
-                        <label class="form-check-label">
-                            Antiage
-                        </label>
+                        <label class="form-check-label">Antiage</label>
                     </div>
 
                     <div class="form-check">
-
                         <input class="form-check-input tratamiento" type="checkbox" value="Antiacné">
-
-                        <label class="form-check-label">
-                            Antiacné
-                        </label>
-
+                        <label class="form-check-label">Antiacné</label>
                     </div>
 
                     <div class="form-check">
-
                         <input class="form-check-input tratamiento" type="checkbox" value="Pigmentación">
-
-                        <label class="form-check-label">
-                            Pigmentación
-                        </label>
-
+                        <label class="form-check-label">Pigmentación</label>
                     </div>
 
                     <div class="form-check">
-
                         <input class="form-check-input tratamiento" type="checkbox" value="Hydrafacial">
-
-                        <label class="form-check-label">
-                            Hydrafacial
-                        </label>
-
+                        <label class="form-check-label">Hydrafacial</label>
                     </div>
 
                     <div class="form-check">
-
                         <input class="form-check-input tratamiento" type="checkbox" value="Rosácea">
-
-                        <label class="form-check-label">
-                            Rosácea
-                        </label>
-
+                        <label class="form-check-label">Rosácea</label>
                     </div>
 
                     <button id="btnProbar" class="btn btn-gold mt-4">
-
                         ✨ Probar
-
                     </button>
 
                 </div>
-
             </div>
 
             <!-- RESULTADO -->
             <div class="col-lg-4">
-
                 <div class="card shadow-sm p-4 h-100">
 
-                    <h3>
+                    <h3>Resultado IA</h3>
 
-                        Resultado IA
+                    <!-- IMAGEN IA -->
+                    <img id="previewIA" class="img-fluid rounded mt-3 d-none"
+                        alt="Resultado generado por inteligencia artificial">
 
-                    </h3>
-
-                    <img id="previewIA" class="img-fluid rounded mt-3 d-none">
-
-                    <button id="btnRecomendaciones" class="btn btn-outline-success mt-4 d-none">
-
+                    <!-- BOTÓN -->
+                    <button id="btnRecomendaciones"
+                        class="btn btn-outline-success mt-4 d-none"
+                        aria-expanded="false">
                         Ver sugerencias adicionales
-
                     </button>
 
-                    <ul id="recomendaciones" class="mt-3"></ul>
+                    <!-- LISTA -->
+                    <ul id="recomendaciones"
+                        class="mt-3"
+                        aria-live="polite">
+                    </ul>
 
                 </div>
-
             </div>
 
         </div>
 
     </main>
-    <!-- Bootstrap -->
+
+    <!-- SCRIPTS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="js/servicios.js"></script>
     <script src="js/api.js"></script>
     <script src="js/app.js"></script>
-    <script src="./js/simulador.js"></script>
+    <script src="js/simulador.js"></script>
 
 </body>
 

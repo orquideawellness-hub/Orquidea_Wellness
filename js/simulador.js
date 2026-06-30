@@ -24,9 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnRecomendaciones = document.getElementById("btnRecomendaciones");
     const recomendaciones = document.getElementById("recomendaciones");
 
-    // ===============================
-    // VALIDACIÓN DOM (CRÍTICO)
-    // ===============================
     if (!btnProbar || !previewIA || !btnRecomendaciones || !recomendaciones) {
         console.error("❌ Falta algún elemento del DOM del simulador");
         return;
@@ -60,9 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("RESULTADO SIMULADOR:", resultado);
 
             // ===========================
-            // IMAGEN IA
+            // IMAGEN IA (SE MANTIENE)
             // ===========================
-            if (resultado.imagen) {
+            if (resultado?.imagen) {
                 previewIA.src = resultado.imagen;
                 previewIA.classList.remove("d-none");
             }
@@ -72,28 +69,28 @@ document.addEventListener("DOMContentLoaded", () => {
             // ===========================
             recomendaciones.innerHTML = "";
 
-            if (Array.isArray(resultado.recomendaciones)) {
-                resultado.recomendaciones.forEach(texto => {
-                    const li = document.createElement("li");
-                    li.textContent = texto;
-                    recomendaciones.appendChild(li);
-                });
-            }
+            const lista = Array.isArray(resultado?.recomendaciones)
+                ? resultado.recomendaciones
+                : [];
+
+            lista.forEach(texto => {
+                const li = document.createElement("li");
+                li.textContent = texto;
+                recomendaciones.appendChild(li);
+            });
 
             // ===========================
-            // MOSTRAR BOTÓN
+            // BOTÓN RECOMENDACIONES
             // ===========================
             btnRecomendaciones.classList.remove("d-none");
             btnRecomendaciones.textContent = "Ver sugerencias adicionales";
 
-            // mantener oculto inicialmente
             recomendaciones.style.display = "none";
 
         } catch (err) {
             console.error("ERROR SIMULADOR:", err);
             alert("Error al ejecutar el simulador.");
         }
-
     });
 
     // ===============================

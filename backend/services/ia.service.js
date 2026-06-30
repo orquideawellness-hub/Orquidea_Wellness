@@ -52,3 +52,88 @@ ${JSON.stringify(servicios)}
         return "Error al conectar con IA.";
     }
 };
+// =====================================================
+// 🧠 SIMULADOR IA (CORREGIDO)
+// =====================================================
+exports.generarSimulacion = async (tratamientos) => {
+
+    try {
+
+        // 🔧 FIX 1: normalización segura
+        const tratamientosTexto = Array.isArray(tratamientos)
+            ? tratamientos.join(", ")
+            : String(tratamientos || "");
+
+        const prompt = `
+Eres una IA experta en estética, cosmetología y bienestar.
+
+El usuario seleccionó estos tratamientos:
+${tratamientosTexto}
+
+Responde únicamente con un objeto JSON válido.
+No incluyas texto adicional bajo ninguna circunstancia.
+La respuesta debe empezar con { y terminar con }.
+
+Formato obligatorio:
+
+{
+  "resumen": "explicación breve del estado de la piel o cuerpo según tratamientos",
+  "recomendaciones": [
+    "consejo personalizado 1",
+    "consejo personalizado 2",
+    "consejo personalizado 3",
+    "consejo personalizado 4"
+  ]
+}
+
+REGLAS IMPORTANTES:
+- Responde SOLO en JSON válido
+- No uses markdown
+- No uses backticks
+- No agregues texto antes o después del JSON
+`;
+
+        const completion = await client.chat.completions.create({
+            model: "openai/gpt-4o-mini",
+            temperature: 0.6, // estabilidad para JSON
+            max_tokens: 500,
+            messages: [
+                {
+                    role: "system",
+                    content: `
+Eres una IA especializada en estética.
+Tu única salida válida es un JSON estricto.
+Está prohibido cualquier texto fuera del JSON.
+                    `.trim()
+                },
+                {
+                    role: "user",
+                    content: prompt
+                }
+            ],
+        });
+
+        // 🔧 FIX 2: limpieza defensiva
+        let response = completion.choices[0].message.content?.trim();
+
+        if (!response) {
+            throw new Error("Respuesta vacía de la IA");
+        }
+
+        response = response
+            .replace(/```json/gi, "")
+            .replace(/```/g, "")
+            .trim();
+
+        return response;
+
+    } catch (error) {
+
+        console.log("OPENROUTER SIMULADOR ERROR:", error);
+
+        return JSON.stringify({
+            resumen: "Error generando simulación",
+            recomendaciones: []
+        });
+    }
+};

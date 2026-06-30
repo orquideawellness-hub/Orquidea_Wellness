@@ -10,6 +10,12 @@ const API = {
             body: JSON.stringify({ mensaje })
         });
 
+        // 🔧 FIX: validar HTTP error antes de JSON
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || "Error HTTP en chat");
+        }
+
         const data = await response.json();
 
         console.log("BACKEND RAW:", data);
@@ -20,6 +26,8 @@ const API = {
 
         return data.data;
     },
+
+
     async ejecutarSimulador(tratamientos) {
 
         const response = await fetch("https://orquideawellness.onrender.com/api/ia/simulador", {
@@ -30,6 +38,12 @@ const API = {
             body: JSON.stringify({ tratamientos })
         });
 
+        // 🔧 FIX IMPORTANTE: evitar crashes silenciosos
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || "Error HTTP en simulador");
+        }
+
         const data = await response.json();
 
         console.log("BACKEND SIMULADOR:", data);
@@ -38,8 +52,10 @@ const API = {
             throw new Error(data.error || "Error en simulador");
         }
 
-        return data; // ✔️ OK (tu backend devuelve plano)
+        // ✔️ opcional pero recomendable: normalización
+        return {
+            imagen: data.imagen,
+            recomendaciones: data.recomendaciones || []
+        };
     }
 };
-
-

@@ -25,7 +25,6 @@ exports.chat = async (req, res) => {
 
   } catch (error) {
     console.error("Error IA:", error);
-
     return res.status(500).json({
       ok: false,
       error: "Error en IA"
@@ -37,10 +36,12 @@ exports.chat = async (req, res) => {
 // SIMULADOR CLÍNICO PRO
 // =====================================================
 exports.simulador = async (req, res) => {
-
   try {
-
-    const { tratamientos } = req.body;
+    // Parseo de tratamientos (maneja tanto JSON directo como FormData)
+    const tratamientos = typeof req.body.tratamientos === 'string' 
+      ? JSON.parse(req.body.tratamientos) 
+      : req.body.tratamientos;
+      
     const file = req.file || null;
 
     if (!tratamientos?.length) {
@@ -50,116 +51,59 @@ exports.simulador = async (req, res) => {
       });
     }
 
-    // =====================================================
     // 1. IA (DIAGNÓSTICO)
-    // =====================================================
     const respuestaIA = await service.generarSimulacion(tratamientos);
-
     console.log("RAW IA:", respuestaIA);
 
-    // 🔒 PARSEO SEGURO (CRÍTICO)
+    // 🔒 PARSEO SEGURO
     let data;
-
     try {
       const inicio = respuestaIA.indexOf("{");
       const fin = respuestaIA.lastIndexOf("}");
-
-      if (inicio === -1 || fin === -1) {
-        throw new Error("IA no devolvió JSON válido");
-      }
-
+      if (inicio === -1 || fin === -1) throw new Error("IA no devolvió JSON válido");
       data = JSON.parse(respuestaIA.substring(inicio, fin + 1));
-
     } catch (err) {
       console.error("❌ Error parse IA:", err);
-
-      return res.status(500).json({
-        ok: false,
-        error: "Error procesando respuesta de IA"
-      });
+      return res.status(500).json({ ok: false, error: "Error procesando respuesta de IA" });
     }
 
-    // =====================================================
-    // 2. SKIN SCORE (SIMULADO CLÍNICO)
-    // =====================================================
-    const skinScore = Math.min(
-      100,
-      Math.max(60, Math.floor(Math.random() * 40) + 60)
-    );
-
-    // Labels clínicos (limpios)
-    const map = {
-      "Acné": "acné",
-      "Rosácea": "rosácea",
-      "Pigmentación": "manchas",
-      "Antiage": "envejecimiento"
-    };
-
+    // 2. SKIN SCORE
+    const skinScore = Math.min(100, Math.max(60, Math.floor(Math.random() * 40) + 60));
+    const map = { "Acné": "acné", "Rosácea": "rosácea", "Pigmentación": "manchas", "Antiage": "envejecimiento" };
     const labels = tratamientos.map(t => map[t]).filter(Boolean);
 
-    // =====================================================
     // 3. IMAGEN (ANTES / DESPUÉS)
-    // =====================================================
     let imagenAntes = null;
     let imagenDespues = null;
 
     try {
-
       if (file) {
-
-        // -------------------------
-        // ANTES
-        // -------------------------
         imagenAntes = `data:image/jpeg;base64,${file.buffer.toString("base64")}`;
-
-        // -------------------------
-        // DESPUÉS (CLÍNICA PRO)
-        // -------------------------
         const processed = await sharp(file.buffer)
           .resize(900, 900, { fit: "cover" })
-
-          // 🔬 estética dermatológica
-          .modulate({
-            brightness: 1.08,
-            saturation: 1.1,
-            hue: 1
-          })
+          .modulate({ brightness: 1.08, saturation: 1.1, hue: 1 })
           .normalise()
           .median(2)
           .sharpen(0.6)
           .blur(0.3)
           .jpeg({ quality: 90 })
           .toBuffer();
-
         imagenDespues = `data:image/jpeg;base64,${processed.toString("base64")}`;
       }
-
     } catch (imgError) {
       console.error("❌ IMAGE ERROR:", imgError);
-
-      // fallback seguro
-      imagenAntes = null;
       imagenDespues = "https://placehold.co/600x800?text=Sin+IA";
     }
 
-    // =====================================================
-    // 4. RESPUESTA FINAL PRO
-    // =====================================================
+    // 4. RESPUESTA FINAL
     return res.json({
       ok: true,
-
-      // imágenes
       imagenAntes,
       imagenDespues,
-
-      // diagnóstico IA
       resumen: data.resumen,
       recomendaciones: data.recomendaciones || [],
-
-      // métricas clínicas
       skinScore,
       labels,
-
       metadata: {
         model: "clinic-pro-v1",
         confidence: skinScore > 80 ? "alta" : "media"
@@ -167,12 +111,7 @@ exports.simulador = async (req, res) => {
     });
 
   } catch (error) {
-
     console.error("ERROR SIMULADOR PRO:", error);
-
-    return res.status(500).json({
-      ok: false,
-      error: "Error en simulador clínico PRO"
-    });
+    return res.status(500).json({ ok: false, error: "Error en simulador clínico PRO" });
   }
 };

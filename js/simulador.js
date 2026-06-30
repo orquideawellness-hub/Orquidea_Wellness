@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     // ===============================
     // VALIDACIÓN API
     // ===============================
@@ -13,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ===============================
     const fotoInput = document.getElementById("fotoInput");
     const previewOriginal = document.getElementById("previewOriginal");
-
     const btnProbar = document.getElementById("btnProbar");
     const previewIA = document.getElementById("previewIA");
     const btnRecomendaciones = document.getElementById("btnRecomendaciones");
@@ -31,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         fotoInput.addEventListener("change", function () {
             const archivo = this.files?.[0];
             if (!archivo) return;
-
             previewOriginal.src = URL.createObjectURL(archivo);
             previewOriginal.classList.remove("d-none");
         });
@@ -41,125 +38,85 @@ document.addEventListener("DOMContentLoaded", () => {
     // RESET UI
     // ===============================
     function resetUI() {
-
         previewIA.classList.add("d-none");
         previewIA.src = "";
-
         recomendaciones.innerHTML = "";
         recomendaciones.style.display = "none";
-
         btnRecomendaciones.classList.add("d-none");
         btnRecomendaciones.textContent = "Ver sugerencias adicionales";
     }
 
     resetUI();
-
     let isLoading = false;
 
     // ===============================
     // BOTÓN PROBAR
     // ===============================
     btnProbar.addEventListener("click", async () => {
-
         if (isLoading) return;
 
-        const tratamientos = [...document.querySelectorAll(".tratamiento:checked")]
-            .map(t => t.value);
+        const archivo = fotoInput.files[0];
+        const tratamientos = [...document.querySelectorAll(".tratamiento:checked")].map(t => t.value);
 
-        if (tratamientos.length === 0) {
-            alert("Seleccione al menos un tratamiento.");
-            return;
-        }
+        if (!archivo) { alert("Por favor, sube una foto."); return; }
+        if (tratamientos.length === 0) { alert("Seleccione al menos un tratamiento."); return; }
+
+        // Crear FormData para enviar archivo + datos
+        const formData = new FormData();
+        formData.append("foto", archivo);
+        formData.append("tratamientos", JSON.stringify(tratamientos));
 
         try {
             isLoading = true;
             btnProbar.disabled = true;
             btnProbar.textContent = "Procesando...";
-
             resetUI();
 
-            const resultado = await API.ejecutarSimulador(tratamientos);
+            // Llamada al endpoint PRO que procesa imágenes
+            const response = await fetch(`${API_BASE}/api/ia/simulador-img`, {
+                method: "POST",
+                body: formData 
+            });
+
+            const resultado = await response.json();
+            if (!resultado.ok) throw new Error(resultado.error);
 
             console.log("RESULTADO SIMULADOR:", resultado);
 
-            // =====================================================
-            // 🧠 ANTES (IMAGEN ORIGINAL)
-            // =====================================================
-            if (resultado?.imagenAntes) {
+            // 🧠 ANTES / DESPUÉS
+            if (resultado.imagenAntes) {
                 previewOriginal.src = resultado.imagenAntes;
                 previewOriginal.classList.remove("d-none");
             }
-
-            // fallback: imagen subida local
-            if (!resultado?.imagenAntes && fotoInput?.files?.[0]) {
-                previewOriginal.src = URL.createObjectURL(fotoInput.files[0]);
-                previewOriginal.classList.remove("d-none");
-            }
-
-            // =====================================================
-            // ✨ DESPUÉS (IA PROCESADA)
-            // =====================================================
-            if (resultado?.imagenDespues) {
+            if (resultado.imagenDespues) {
                 previewIA.src = resultado.imagenDespues;
                 previewIA.classList.remove("d-none");
-            } else if (resultado?.imagen) {
-                // compatibilidad backend anterior
-                previewIA.src = resultado.imagen;
-                previewIA.classList.remove("d-none");
             }
 
-            // =====================================================
-            // 🧬 SCORE CLÍNICO (CORREGIDO)
-            // =====================================================
-            if (resultado?.skinScore !== undefined) {
-
+            // 🧬 SCORE CLÍNICO
+            if (resultado.skinScore !== undefined) {
                 const scoreDiv = document.createElement("div");
-
-                const confidenceRaw = resultado.metadata?.confidence;
-
-                // Normalización de confidence
-                let valoracion = "no disponible";
-
-                if (typeof confidenceRaw === "number") {
-                    if (confidenceRaw >= 0.8) valoracion = "alta";
-                    else if (confidenceRaw >= 0.5) valoracion = "media";
-                    else valoracion = "baja";
-                }
-                else if (typeof confidenceRaw === "string") {
-                    valoracion = confidenceRaw;
-                }
-
+                const valoracion = resultado.metadata?.confidence || "media";
                 scoreDiv.innerHTML = `
-        <div class="alert alert-info mt-3">
-            <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
-            <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
-            <small>Valoración: ${valoracion}</small>
-        </div>
-    `;
-
-                document.getElementById("scoreContainer")?.appendChild(scoreDiv);
+                    <div class="alert alert-info mt-3">
+                        <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
+                        <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
+                        <small>Valoración: ${valoracion}</small>
+                    </div>`;
+                document.getElementById("scoreContainer")?.replaceChildren(scoreDiv);
             }
 
-            // =====================================================
             // 📋 RECOMENDACIONES
-            // =====================================================
-            const lista = Array.isArray(resultado?.recomendaciones)
-                ? resultado.recomendaciones
-                : [];
-
-            lista.forEach(texto => {
+            (resultado.recomendaciones || []).forEach(texto => {
                 const li = document.createElement("li");
                 li.textContent = texto;
                 recomendaciones.appendChild(li);
             });
 
             btnRecomendaciones.classList.remove("d-none");
-            recomendaciones.style.display = "none";
-
         } catch (err) {
             console.error("ERROR SIMULADOR:", err);
-            alert("Error al ejecutar el simulador.");
-
+            alert("Error al ejecutar el simulador: " + err.message);
         } finally {
             isLoading = false;
             btnProbar.disabled = false;
@@ -171,14 +128,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // TOGGLE RECOMENDACIONES
     // ===============================
     btnRecomendaciones.addEventListener("click", () => {
-
         const oculto = recomendaciones.style.display === "none";
-
         recomendaciones.style.display = oculto ? "block" : "none";
-
-        btnRecomendaciones.textContent = oculto
-            ? "Ocultar sugerencias"
-            : "Ver sugerencias adicionales";
+        btnRecomendaciones.textContent = oculto ? "Ocultar sugerencias" : "Ver sugerencias adicionales";
     });
-
 });

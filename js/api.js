@@ -12,7 +12,6 @@ const API = {
     // 💬 CHAT IA
     // =====================================================
     async enviarMensajeOrquia(mensaje) {
-
         const response = await fetch(`${API_BASE}/api/ia/chat`, {
             method: "POST",
             headers: {
@@ -27,9 +26,6 @@ const API = {
         }
 
         const data = await response.json();
-
-        console.log("BACKEND CHAT:", data);
-
         if (!data.ok || !data.data) {
             throw new Error(data.error || "Respuesta inválida del backend");
         }
@@ -38,19 +34,15 @@ const API = {
     },
 
     // =====================================================
-    // 🧪 SIMULADOR CLÍNICO PRO (ANTES/DESPUÉS + SCORE)
+    // 🧪 SIMULADOR CLÍNICO PRO (MODIFICADO PARA FormData)
     // =====================================================
-    async ejecutarSimulador(tratamientos) {
-
-        const response = await fetch(`${API_BASE}/api/ia/simulador`, {
+    async ejecutarSimulador(formData) {
+        // Al enviar FormData, NO se debe definir el Content-Type, 
+        // el navegador lo calcula automáticamente con el boundary correcto.
+        const response = await fetch(`${API_BASE}/api/ia/simulador-img`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ tratamientos })
+            body: formData
         });
-
-        console.log("STATUS:", response.status);
 
         if (!response.ok) {
             const errorText = await response.text();
@@ -59,29 +51,17 @@ const API = {
 
         const data = await response.json();
 
-        console.log("BACKEND SIMULADOR:", data);
-
         if (!data.ok) {
             throw new Error(data.error || "Error en simulador");
         }
 
-        // =====================================================
-        // 🔁 NORMALIZACIÓN CLÍNICA COMPLETA
-        // =====================================================
         return {
-            // 🧠 IMÁGENES PRO
             imagenAntes: data.imagenAntes || null,
             imagenDespues: data.imagenDespues || data.imagen || null,
-
-            // 📋 IA CLÍNICA
             resumen: data.resumen || "",
             recomendaciones: data.recomendaciones || [],
-
-            // 🧬 MÉTRICAS PRO (NUEVAS DEL BACKEND)
             skinScore: data.skinScore ?? null,
             labels: data.labels || [],
-
-            // 📊 METADATOS (fallback seguro)
             metadata: data.metadata || {
                 model: "clinic-pro-v1",
                 confidence: "media"

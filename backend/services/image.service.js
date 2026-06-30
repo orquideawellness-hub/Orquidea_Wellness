@@ -1,5 +1,5 @@
 require("dotenv").config();
-const FormData = require("form-data"); // 🔴 FALTABA ESTO
+const FormData = require("form-data");
 
 exports.generarImagen = async (tratamientos, resumen) => {
     try {
@@ -10,15 +10,9 @@ exports.generarImagen = async (tratamientos, resumen) => {
 
         const prompt = `
 Fotografía dermatológica profesional ultra realista.
-
-Paciente con tratamientos: ${tratamientosTexto}.
+Paciente con: ${tratamientosTexto}.
 Condición: ${resumen}.
-
-Estilo:
-- iluminación suave de clínica estética
-- piel humana realista
-- antes y después skincare
-- ultra detallado 4K
+Iluminación clínica estética, piel realista, estilo before/after skincare.
 `;
 
         const form = new FormData();
@@ -39,20 +33,20 @@ Estilo:
 
         console.log("STATUS:", response.status);
 
+        const raw = await response.arrayBuffer();
+
         if (!response.ok) {
-            const errorText = await response.text();
-            console.log("ERROR RAW:", errorText);
-            throw new Error(`Stability error: ${errorText}`);
+            const errorText = Buffer.from(raw).toString();
+            console.log("STABILITY ERROR:", errorText);
+            throw new Error(errorText);
         }
 
-        const buffer = await response.arrayBuffer();
-        const base64 = Buffer.from(buffer).toString("base64");
+        const base64 = Buffer.from(raw).toString("base64");
 
         return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-        console.error("❌ ERROR IMAGE SERVICE:", error.message);
-
-        return `https://placehold.co/600x800?text=Sin+IA`;
+        console.error("❌ IMAGE ERROR:", error.message);
+        return "https://placehold.co/600x800?text=Sin+IA";
     }
 };

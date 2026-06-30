@@ -12,23 +12,22 @@ Professional dermatology skincare photography.
 Patient treatments: ${tratamientos.join(", ")}.
 Condition: ${resumen}.
 
-ultra realistic, clinic lighting, high detail, 4k portrait
+ultra realistic clinic portrait, soft lighting, high detail, 4k
 `;
 
-        const response = await axios.post(
-            `https://api-inference.huggingface.co/models/${HF_MODEL}`,
-            {
+        const response = await axios({
+            method: "POST",
+            url: `https://api-inference.huggingface.co/models/${HF_MODEL}`,
+            headers: {
+                Authorization: `Bearer ${process.env.HF_TOKEN}`,
+                "Content-Type": "application/json"
+            },
+            data: {
                 inputs: prompt
             },
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.HF_TOKEN}`,
-                    "Content-Type": "application/json"
-                },
-                responseType: "arraybuffer",
-                timeout: 60000
-            }
-        );
+            responseType: "arraybuffer",
+            timeout: 60000
+        });
 
         console.log("STATUS HF:", response.status);
 
@@ -37,8 +36,12 @@ ultra realistic, clinic lighting, high detail, 4k portrait
         return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-        console.error("❌ HF IMAGE ERROR:");
-        console.error(error.code || error.message);
+
+        console.error("❌ HF ERROR:");
+        console.error({
+            code: error.code,
+            message: error.message
+        });
 
         return "https://placehold.co/600x800?text=Sin+IA";
     }

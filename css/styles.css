@@ -80,7 +80,7 @@ body {
 }
 
 .navbar-brand {
-    margin-right: 15px !important;
+    margin-right: 12px !important;
 }
 
 .logo-navbar {
@@ -94,8 +94,8 @@ body {
 
 .brand-title {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 500;
     color: var(--white);
     margin-bottom: 0;
 }
@@ -136,7 +136,7 @@ body {
     width: 100%;
 }
 .navbar-nav .nav-link{
-    margin-left: 10px; /* Reduce esto de 8px a 10px según prefieras */
+    margin-left: 8px; /* Reduce esto de 8px a 10px según prefieras */
     padding-left: 5px;
     padding-right: 5px;
     white-space: nowrap; /* Asegura que las palabras no se rompan */

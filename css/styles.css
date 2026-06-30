@@ -217,6 +217,10 @@ body{
     color:#fff;
 
 }
+
+body.dark-mode .hero-section .text-muted{
+    color:#d6d6d6 !important;
+}
 /* ==========================
    BOTONES
 ========================== */

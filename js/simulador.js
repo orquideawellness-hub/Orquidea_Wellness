@@ -84,28 +84,29 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("RESULTADO SIMULADOR:", resultado);
 
             // 🧠 ANTES / DESPUÉS
+            // Asegúrate de tener <img id="previewAntes" ...> en tu HTML debajo del título "Antes"
+            const previewAntes = document.getElementById("previewAntes");
+            const previewIA = document.getElementById("previewIA");
+
             if (resultado.imagenAntes) {
-                previewOriginal.src = resultado.imagenAntes;
-                previewOriginal.classList.remove("d-none");
+                previewAntes.src = resultado.imagenAntes;
+                previewAntes.classList.remove("d-none");
             }
             if (resultado.imagenDespues) {
                 previewIA.src = resultado.imagenDespues;
                 previewIA.classList.remove("d-none");
             }
 
-            // 🧬 SCORE CLÍNICO
+            // 🧬 SCORE CLÍNICO ACTUALIZADO
             if (resultado.skinScore !== undefined) {
                 const scoreDiv = document.createElement("div");
-                // Usamos resultado.condicion que viene del nuevo controlador
-                const condicion = resultado.condicion || "Evaluación en curso";
-
                 scoreDiv.innerHTML = `
         <div class="alert alert-info mt-3">
             <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
-            <p><strong>Estado de la piel:</strong> ${condicion}</p>
+            <p><strong>Estado:</strong> ${resultado.condicion}</p>
+            <p><strong>Valoración:</strong> ${resultado.valoracion}</p>
             <small>Edad aparente estimada: ${resultado.metadata?.edadAparente || "N/A"} años</small>
         </div>`;
-
                 document.getElementById("scoreContainer")?.replaceChildren(scoreDiv);
             }
 

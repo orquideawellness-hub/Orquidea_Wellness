@@ -67,26 +67,33 @@ exports.simulador = async (req, res) => {
       return res.status(500).json({ ok: false, error: "Error procesando respuesta de IA" });
     }
 
-    // 2. SKIN SCORE Y CONDICIÓN CLÍNICA (Lógica basada en edad aparente)
-    // Simulación de edad aparente detectada por IA (entre 20 y 70 años)
-    const edadAparente = Math.floor(Math.random() * 50) + 20;
+    // 2. SKIN SCORE Y CONDICIÓN CLÍNICA
+    // Lógica corregida: 
+    // - Edad < 30: Score > 80, Valoración "Muy alta"
+    // - Edad 30-39: Score 60-80, Valoración "Alta/Media"
+    // - Edad >= 40: Score < 60, Valoración "Baja/Muy baja"
+
+    const edadAparente = Math.floor(Math.random() * 20) + 20; // Rango 20-40 años para este ejemplo
     let skinScore;
     let condicionTexto;
+    let valoracion;
 
     if (edadAparente < 30) {
-      skinScore = 95 - (edadAparente - 20); // Puntaje muy alto para piel joven
-      condicionTexto = "Piel radiante y luminosa"; // Sin palabras de envejecimiento
+      skinScore = 95 - (edadAparente - 20); // 86 a 95
+      condicionTexto = "Piel radiante y luminosa";
+      valoracion = "Muy alta";
     } else if (edadAparente < 40) {
-      skinScore = 85 - (edadAparente - 30); // Puntaje bueno para piel en transición
-      condicionTexto = "Piel con textura equilibrada"; // Sin palabras de envejecimiento
-    } else if (edadAparente === 40) {
-      skinScore = 60;
-      condicionTexto = "Envejecimiento moderado";
+      skinScore = 70 - ((edadAparente - 30) * 1); // 61 a 70
+      condicionTexto = "Piel con textura equilibrada";
+      valoracion = "Alta";
     } else {
-      // A mayor edad aparente (>40), el puntaje baja desde 60
-      skinScore = Math.max(20, 60 - ((edadAparente - 40) * 2));
-      condicionTexto = "Envejecimiento avanzado";
+      skinScore = 60 - ((edadAparente - 40) * 2);
+      condicionTexto = "Envejecimiento moderado";
+      valoracion = "Media";
     }
+
+    // Asegurar que no baje de un mínimo lógico si es joven
+    skinScore = Math.max(10, Math.min(100, skinScore));
 
     const map = { "Acné": "acné", "Rosácea": "rosácea", "Pigmentación": "manchas", "Antiage": "envejecimiento" };
     const labels = tratamientos.map(t => map[t]).filter(Boolean);
@@ -122,11 +129,12 @@ exports.simulador = async (req, res) => {
       resumen: data.resumen,
       recomendaciones: data.recomendaciones || [],
       skinScore,
-      condicion: condicionTexto, // Se envía la nueva condición calculada
+      condicion: condicionTexto,
+      valoracion: valoracion, // <--- ESTO ES LO QUE FALTA
       labels,
       metadata: {
         model: "clinic-pro-v1",
-        edadAparente: edadAparente, // Útil para depuración
+        edadAparente: edadAparente,
         confidence: skinScore > 60 ? "alta" : "media"
       }
     });

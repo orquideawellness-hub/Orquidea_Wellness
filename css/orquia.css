@@ -111,3 +111,33 @@ body.dark-mode .chat-input input::placeholder{
     }
 
 }
+/* Corrección para que el menú móvil no desborde */
+@media (max-width: 991px) {
+    .navbar-collapse {
+        background-color: var(--olive); /* O el color de fondo que prefieras para el menú */
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .navbar-nav .nav-item {
+        margin: 5px 0;
+    }
+
+    /* Asegurar que el botón de dark mode esté centrado en móvil */
+    #darkModeBtn {
+        margin-top: 10px;
+        display: block;
+        width: 100%;
+    }
+}
+
+/* Evitar desbordamiento global en móviles */
+body {
+    overflow-x: hidden;
+}

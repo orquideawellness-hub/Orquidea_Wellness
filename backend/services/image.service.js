@@ -4,21 +4,54 @@ exports.generarImagen = async (tratamientos, resumen) => {
         ? tratamientos.join(", ")
         : String(tratamientos || "");
 
+    // =====================================================
+    // 🧠 PROMPT CLÍNICO (MODO IA VISUAL)
+    // =====================================================
     const prompt = `
 dermatology clinical photography, realistic medical portrait,
 adult patient, neutral expression, front view,
 clean clinical white background, soft studio lighting,
-high detail skin texture, realistic skin pores,
+high detail skin texture, realistic pores,
 
 condition: ${resumen},
 treatments: ${tratamientosTexto},
 
-professional skincare before and after,
-ultra realistic, 4k, sharp focus, medical aesthetic
+before and after skincare comparison,
+ultra realistic, 4k, sharp focus, dermatology aesthetic
 `;
 
-    // 🔥 SERVICIO GRATIS (SIN API KEY)
-    const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
+    // =====================================================
+    // 🚨 MODO ACTUAL (PRODUCCIÓN SEGURA)
+    // =====================================================
+    // Ya NO dependemos de APIs externas (evita:
+    // - ENOTFOUND
+    // - rate limit
+    // - queue full
+    // - latency)
+    // =====================================================
 
-    return url;
+    const useExternalImageAPI = false;
+
+    // =====================================================
+    // 🌐 OPCIONAL (FUTURO - DESACTIVADO)
+    // =====================================================
+    if (useExternalImageAPI) {
+
+        // ⚠️ Pollinations (solo referencia)
+        const url = `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}`;
+
+        return url;
+    }
+
+    // =====================================================
+    // 🧴 MODO LOCAL (RECOMENDADO)
+    // =====================================================
+    // No genera imagen aquí, SOLO metadata útil
+
+    return {
+        mode: "local_pro",
+        prompt,
+        status: "handled_by_controller",
+        note: "Imagen generada en controller con sharp (antes/después clínico)"
+    };
 };

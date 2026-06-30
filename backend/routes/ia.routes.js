@@ -6,18 +6,34 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 const controller = require("../controllers/ia.controller");
 
-// ✔ TEST
+
+// =====================================================
+// ✔ TEST ROUTE
+// =====================================================
 router.get("/chat", (req, res) => {
-  res.json({ ok: true, message: "Endpoint chat activo (GET test)" });
+  res.json({
+    ok: true,
+    message: "Endpoint chat activo (GET test)"
+  });
 });
 
-// ✔ CHAT IA
+
+// =====================================================
+// ✔ CHAT IA (texto puro)
+// =====================================================
 router.post("/chat", controller.chat);
 
-// ✔ SIMULADOR (SOLO TEXTO - mantiene compatibilidad)
+
+// =====================================================
+// ✔ SIMULADOR BASE (SIN IMAGEN)
+// =====================================================
 router.post("/simulador", controller.simulador);
 
-// ✔ SIMULADOR PRO (CON IMAGEN)
+
+// =====================================================
+// ✔ SIMULADOR PRO (CON IMAGEN + MULTER)
+// =====================================================
+// 🔥 usa el MISMO controller pero ahora recibe req.file
 router.post(
   "/simulador-img",
   upload.single("foto"),

@@ -38,9 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===============================
-    // ESTADO INICIAL
+    // RESET UI
     // ===============================
     function resetUI() {
+
         previewIA.classList.add("d-none");
         previewIA.src = "";
 
@@ -81,17 +82,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log("RESULTADO SIMULADOR:", resultado);
 
-            // ===========================
-            // IMAGEN IA
-            // ===========================
-            if (resultado?.imagen) {
+            // =====================================================
+            // 🧠 ANTES (IMAGEN ORIGINAL)
+            // =====================================================
+            if (resultado?.imagenAntes) {
+                previewOriginal.src = resultado.imagenAntes;
+                previewOriginal.classList.remove("d-none");
+            }
+
+            // fallback: imagen subida local
+            if (!resultado?.imagenAntes && fotoInput?.files?.[0]) {
+                previewOriginal.src = URL.createObjectURL(fotoInput.files[0]);
+                previewOriginal.classList.remove("d-none");
+            }
+
+            // =====================================================
+            // ✨ DESPUÉS (IA PROCESADA)
+            // =====================================================
+            if (resultado?.imagenDespues) {
+                previewIA.src = resultado.imagenDespues;
+                previewIA.classList.remove("d-none");
+            } else if (resultado?.imagen) {
+                // compatibilidad backend anterior
                 previewIA.src = resultado.imagen;
                 previewIA.classList.remove("d-none");
             }
 
-            // ===========================
-            // RECOMENDACIONES
-            // ===========================
+            // =====================================================
+            // 🧬 SCORE CLÍNICO
+            // =====================================================
+            if (resultado?.skinScore !== undefined) {
+
+                const scoreDiv = document.createElement("div");
+
+                scoreDiv.innerHTML = `
+                    <div class="alert alert-info mt-3">
+                        <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
+                        <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
+                        <small>Nivel clínico: ${resultado.metadata?.confidence || "media"}</small>
+                    </div>
+                `;
+
+                recomendaciones.appendChild(scoreDiv);
+            }
+
+            // =====================================================
+            // 📋 RECOMENDACIONES
+            // =====================================================
             const lista = Array.isArray(resultado?.recomendaciones)
                 ? resultado.recomendaciones
                 : [];

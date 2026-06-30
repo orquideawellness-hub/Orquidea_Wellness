@@ -202,13 +202,13 @@ body {
 }
 
 .hero-text {
-    font-size: 0.8rem;
+    font-size: 1.0rem;
     color: #666;
     margin-top: 20px;
 }
 
 .hero-logo {
-    max-width: 380px;
+    max-width: 400px;
     animation: float 4s ease-in-out infinite;
 }
 

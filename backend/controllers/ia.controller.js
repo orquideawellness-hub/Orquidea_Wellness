@@ -36,3 +36,41 @@ exports.chat = async (req, res) => {
     });
   }
 };
+
+exports.simulador = async (req, res) => {
+
+  try {
+
+    const { tratamientos } = req.body;
+
+    if (!tratamientos || tratamientos.length === 0) {
+      return res.status(400).json({
+        ok: false,
+        error: "Debe seleccionar al menos un tratamiento."
+      });
+    }
+
+    // Por ahora solo devolvemos datos de prueba
+    res.json({
+      ok: true,
+      imagen: "https://placehold.co/600x800?text=Resultado+IA",
+      recomendaciones: [
+        "Dormir entre 7 y 8 horas.",
+        "Beber al menos 2 litros de agua al día.",
+        "Usar protector solar diariamente.",
+        "Mantener una alimentación equilibrada."
+      ]
+    });
+
+  } catch (error) {
+
+    console.error("Error Simulador:", error);
+
+    res.status(500).json({
+      ok: false,
+      error: "Error en simulador IA."
+    });
+
+  }
+
+};

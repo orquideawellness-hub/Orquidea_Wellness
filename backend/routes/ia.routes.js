@@ -6,5 +6,6 @@ router.get("/chat", (req, res) => {
   res.json({ ok: true, message: "Endpoint chat activo (GET test)" });
 });
 router.post("/chat", controller.chat);
+router.post("/simulador", controller.simulador);
 
 module.exports = router;

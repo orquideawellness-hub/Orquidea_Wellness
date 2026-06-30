@@ -37,7 +37,11 @@ const API = {
             },
             body: JSON.stringify({ tratamientos })
         });
+        3. Test rápido
 
+        Agrega:
+
+        console.log("STATUS:", response.status);
         // 🔧 FIX IMPORTANTE: evitar crashes silenciosos
         if (!response.ok) {
             const errorText = await response.text();

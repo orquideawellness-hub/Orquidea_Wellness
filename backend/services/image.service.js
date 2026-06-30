@@ -1,24 +1,13 @@
 require("dotenv").config();
-
-/**
- * 🧠 Generación de imagen con IA (Stable Diffusion API)
- * - Basado en tratamientos + resumen IA
- * - Con fallback seguro si falla la API
- */
+const FormData = require("form-data"); // 🔴 FALTABA ESTO
 
 exports.generarImagen = async (tratamientos, resumen) => {
     try {
 
-        // ===============================
-        // 1. NORMALIZAR INPUT
-        // ===============================
         const tratamientosTexto = Array.isArray(tratamientos)
             ? tratamientos.join(", ")
             : String(tratamientos || "");
 
-        // ===============================
-        // 2. PROMPT OPTIMIZADO IA IMAGEN
-        // ===============================
         const prompt = `
 Fotografía dermatológica profesional ultra realista.
 
@@ -28,59 +17,42 @@ Condición: ${resumen}.
 Estilo:
 - iluminación suave de clínica estética
 - piel humana realista
-- enfoque en mejora facial
-- calidad 4K
-- estilo "before and after skincare"
+- antes y después skincare
+- ultra detallado 4K
 `;
 
-        // ===============================
-        // 3. LLAMADA A STABILITY AI
-        // ===============================
+        const form = new FormData();
+        form.append("prompt", prompt);
+        form.append("output_format", "png");
+
         const response = await fetch(
             "https://api.stability.ai/v2beta/stable-image/generate/core",
             {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${process.env.STABILITY_API_KEY}`,
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
+                    "Accept": "image/*"
                 },
-                body: JSON.stringify({
-                    prompt,
-                    output_format: "png"
-                })
+                body: form
             }
         );
 
-        const data = await response.json();
+        console.log("STATUS:", response.status);
 
-        console.log("🧠 STABILITY RAW RESPONSE:", data);
-
-        // ===============================
-        // 4. EXTRACCIÓN ROBUSTA DE IMAGEN
-        // ===============================
-        const imageBase64 =
-            data?.image ||
-            data?.artifacts?.[0]?.base64 ||
-            data?.output?.[0]?.base64 ||
-            null;
-
-        if (!imageBase64) {
-            throw new Error("No image returned from Stability API");
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.log("ERROR RAW:", errorText);
+            throw new Error(`Stability error: ${errorText}`);
         }
 
-        // ===============================
-        // 5. FORMATO FINAL
-        // ===============================
-        return `data:image/png;base64,${imageBase64}`;
+        const buffer = await response.arrayBuffer();
+        const base64 = Buffer.from(buffer).toString("base64");
+
+        return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-
         console.error("❌ ERROR IMAGE SERVICE:", error.message);
 
-        // ===============================
-        // 6. FALLBACK SEGURO
-        // ===============================
         return `https://placehold.co/600x800?text=Sin+IA`;
     }
 };

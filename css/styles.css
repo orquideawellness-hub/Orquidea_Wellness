@@ -179,7 +179,7 @@ body {
     background: var(--cream);
     /* Reduce este valor. 10px hará que la sección suba mucho más. 
        Prueba con 80px o 100px para empezar a notar el cambio. */
-    padding-top: 80px; 
+    padding-top: 70px; 
     min-height: 100vh; /* Asegura que la sección cubra la pantalla */
     display: flex;
     align-items: center;
@@ -198,7 +198,7 @@ body {
     color: var(--olive);
     line-height: 1.1; /* Aumentado para mayor legibilidad */
     margin-top: 20px; /* Esto separará el título de la etiqueta superior */
-    font-size: 2.5rem;
+    font-size: 3.0rem;
 }
 
 .hero-text {

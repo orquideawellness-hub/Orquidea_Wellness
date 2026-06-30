@@ -1,8 +1,12 @@
+const API_BASE = location.hostname === "localhost"
+    ? "http://localhost:4000"
+    : "https://orquideawellness.onrender.com";
+
 const API = {
 
     async enviarMensajeOrquia(mensaje) {
 
-        const response = await fetch("https://orquideawellness.onrender.com/api/ia/chat", {
+        const response = await fetch(`${API_BASE}/api/ia/chat`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -10,7 +14,6 @@ const API = {
             body: JSON.stringify({ mensaje })
         });
 
-        // Validar errores HTTP
         if (!response.ok) {
             const errorText = await response.text();
             throw new Error(errorText || "Error HTTP en chat");
@@ -58,5 +61,4 @@ const API = {
             recomendaciones: data.recomendaciones || []
         };
     }
-
 };

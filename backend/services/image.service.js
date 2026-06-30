@@ -7,22 +7,136 @@ exports.generarImagen = async (tratamientos, resumen) => {
     try {
 
         const tratamientosTexto = Array.isArray(tratamientos)
-            ? tratamientos.join(", ")
-            : String(tratamientos || "");
+    ? tratamientos.join(", ")
+    : String(tratamientos || "");
 
-        const prompt = `
-Fotografía dermatológica profesional ultra realista.
+let prompt = "";
 
-Paciente con tratamientos: ${tratamientosTexto}.
+if (tratamientosTexto.includes("Antiage")) {
 
-Condición:
-${resumen}
+    prompt = `
+Luxury beauty clinic.
 
-Iluminación clínica estética.
-Piel humana realista.
-Antes y después skincare.
-Alta calidad 4K.
+Beautiful adult woman.
+
+Younger-looking healthy skin.
+
+Professional anti-aging facial.
+
+Elegant spa.
+
+Natural beauty.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
 `;
+
+} else if (tratamientosTexto.includes("Antiacné")) {
+
+    prompt = `
+Luxury beauty clinic.
+
+Beautiful adult woman.
+
+Clear healthy skin.
+
+Professional facial cleansing.
+
+Fresh natural beauty.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
+`;
+
+} else if (tratamientosTexto.includes("Pigmentación")) {
+
+    prompt = `
+Luxury beauty clinic.
+
+Beautiful adult woman.
+
+Even glowing skin tone.
+
+Professional facial treatment.
+
+Natural beauty.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
+`;
+
+} else if (tratamientosTexto.includes("Hydrafacial")) {
+
+    prompt = `
+Luxury beauty clinic.
+
+Professional hydrafacial.
+
+Hydrated glowing skin.
+
+Beautiful adult woman.
+
+Spa atmosphere.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
+`;
+
+} else if (tratamientosTexto.includes("Rosácea")) {
+
+    prompt = `
+Luxury beauty clinic.
+
+Beautiful adult woman.
+
+Healthy calm glowing skin.
+
+Professional facial skincare.
+
+Elegant spa.
+
+Natural beauty.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
+`;
+
+} else {
+
+    prompt = `
+Luxury beauty clinic.
+
+Beautiful adult woman.
+
+Healthy glowing skin.
+
+Professional skincare.
+
+Elegant spa.
+
+Ultra realistic photography.
+
+Soft lighting.
+
+4K.
+`;
+
+}
 
         // ==========================
         // FORM DATA

@@ -177,7 +177,7 @@ body {
 ========================== */
 .hero-section {
     background: var(--cream);
-    padding-top: 70px;
+    padding-top: 10px;
 }
 
 .hero-badge {

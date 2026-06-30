@@ -54,17 +54,25 @@ Estilo:
 
         const data = await response.json();
 
+        console.log("🧠 STABILITY RAW RESPONSE:", data);
+
         // ===============================
-        // 4. VALIDACIÓN DE RESPUESTA
+        // 4. EXTRACCIÓN ROBUSTA DE IMAGEN
         // ===============================
-        if (!data || !data.image) {
+        const imageBase64 =
+            data?.image ||
+            data?.artifacts?.[0]?.base64 ||
+            data?.output?.[0]?.base64 ||
+            null;
+
+        if (!imageBase64) {
             throw new Error("No image returned from Stability API");
         }
 
         // ===============================
         // 5. FORMATO FINAL
         // ===============================
-        return `data:image/png;base64,${data.image}`;
+        return `data:image/png;base64,${imageBase64}`;
 
     } catch (error) {
 

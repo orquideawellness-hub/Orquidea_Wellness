@@ -166,6 +166,7 @@ body {
 ========================== */
 .hero-section {
     background: var(--cream);
+    padding-top: 90px;
 }
 
 .hero-badge {
@@ -520,6 +521,7 @@ body.dark-mode .hero-section .text-muted {
     }
 }
 
+
 @media (max-width:768px) {
 
     .section-padding {
@@ -546,6 +548,9 @@ body.dark-mode .hero-section .text-muted {
 
 @media (max-width:576px) {
 
+    .hero-section{
+        padding-top: 120px;
+    }
     .hero-title {
         font-size: 2rem;
     }

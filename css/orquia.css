@@ -53,6 +53,7 @@
 .chat-input {
   display: flex;
   gap: 10px;
+  width:100%;
 }
 
 .chat-input input {
@@ -92,4 +93,21 @@ body.dark-mode .chat-input input{
 
 body.dark-mode .chat-input input::placeholder{
     color:#bdbdbd;
+}
+@media (max-width:576px){
+
+    .chat-container{
+        max-width:100%;
+        padding:20px 15px;
+        margin-top:90px;
+    }
+
+    .chat-box{
+        height:60vh;
+    }
+
+    .msg{
+        max-width:85%;
+    }
+
 }

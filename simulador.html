@@ -52,60 +52,71 @@
         </div>
     </nav>
 
-    <main class="container py-5 mt-5">
-        <div class="row g-4">
-
-            <div class="col-lg-4">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3 class="mb-4">1. Sube tu foto</h3>
-                    <input type="file" id="fotoInput" accept="image/*" class="form-control mb-3">
-                    <img id="previewOriginal" class="img-fluid rounded d-none" alt="Foto original del usuario">
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3 class="mb-4">2. Selecciona tratamientos</h3>
-                    <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
-                            value="Antiage"><label class="form-check-label">Antiage</label></div>
-                    <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
-                            value="Antiacné"><label class="form-check-label">Antiacné</label></div>
-                    <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
-                            value="Pigmentación"><label class="form-check-label">Pigmentación</label></div>
-                    <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
-                            value="Hydrafacial"><label class="form-check-label">Hydrafacial</label></div>
-                    <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
-                            value="Rosácea"><label class="form-check-label">Rosácea</label></div>
-                    <button id="btnProbar" class="btn btn-gold mt-4">✨ Probar simulación</button>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
-                <div class="card shadow-sm p-4 h-100">
-                    <h3 class="mb-4">Resultado IA</h3>
-
-                    <div class="row g-2 mt-3">
-                        <div class="col-6 text-center">
-                            <small class="d-block text-muted">Antes</small>
-                            <img id="previewAntes" class="img-fluid img-thumbnail rounded mt-2 d-none"
-                                alt="Foto original">
-                        </div>
-                        <div class="col-6 text-center">
-                            <small class="d-block text-muted">Después</small>
-                            <img id="previewIA" class="img-fluid img-thumbnail rounded mt-2 d-none" alt="Simulación IA">
-                        </div>
-                    </div>
-
-                    <div id="scoreContainer" class="mt-3"></div>
-
-                    <button id="btnRecomendaciones" class="btn btn-outline-success btn-sm w-100 mt-4 d-none">
-                        Ver sugerencias adicionales
-                    </button>
-
-                    <ul id="recomendaciones" class="mt-3 small" style="display: none;"></ul>
-                </div>
+    <main class="container">
+        <div class="simulador-header">
+            <h1>Simulador IA</h1>
+            <p>
+                Visualiza una simulación referencial del resultado de tus tratamientos
+                faciales mediante inteligencia artificial.
+            </p>
         </div>
 
+        <div class="container">
+            <div class="row g-4">
+
+                <div class="col-lg-4">
+                    <div class="card shadow-sm p-4 h-100">
+                        <h3 class="mb-4">1. Sube tu foto</h3>
+                        <input type="file" id="fotoInput" accept="image/*" class="form-control mb-3">
+                        <img id="previewOriginal" class="img-fluid rounded d-none" alt="Foto original del usuario">
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card shadow-sm p-4 h-100">
+                        <h3 class="mb-4">2. Selecciona tratamientos</h3>
+                        <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
+                                value="Antiage"><label class="form-check-label">Antiage</label></div>
+                        <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
+                                value="Antiacné"><label class="form-check-label">Antiacné</label></div>
+                        <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
+                                value="Pigmentación"><label class="form-check-label">Pigmentación</label></div>
+                        <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
+                                value="Hydrafacial"><label class="form-check-label">Hydrafacial</label></div>
+                        <div class="form-check"><input class="form-check-input tratamiento" type="checkbox"
+                                value="Rosácea"><label class="form-check-label">Rosácea</label></div>
+                        <button id="btnProbar" class="btn btn-gold mt-4">✨ Probar simulación</button>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="card shadow-sm p-4 h-100">
+                        <h3 class="mb-4">Resultado IA</h3>
+
+                        <div class="row g-2 mt-3">
+                            <div class="col-6 text-center">
+                                <small class="d-block text-muted">Antes</small>
+                                <img id="previewAntes" class="img-fluid img-thumbnail rounded mt-2 d-none"
+                                    alt="Foto original">
+                            </div>
+                            <div class="col-6 text-center">
+                                <small class="d-block text-muted">Después</small>
+                                <img id="previewIA" class="img-fluid img-thumbnail rounded mt-2 d-none"
+                                    alt="Simulación IA">
+                            </div>
+                        </div>
+
+                        <div id="scoreContainer" class="mt-3"></div>
+
+                        <button id="btnRecomendaciones" class="btn btn-outline-success btn-sm w-100 mt-4 d-none">
+                            Ver sugerencias adicionales
+                        </button>
+
+                        <ul id="recomendaciones" class="mt-3 small" style="display: none;"></ul>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </main>
 

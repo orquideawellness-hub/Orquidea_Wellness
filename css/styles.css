@@ -64,6 +64,8 @@ body {
    NAVBAR ACTUALIZADO
 ========================== */
 .navbar {
+    width: 100%;
+    overflow-x: hidden;
     background-color: var(--olive-dark);
 
     /* Primero el prefijo para versiones anteriores de Safari */
@@ -72,9 +74,13 @@ body {
     /* Luego la propiedad estándar para navegadores modernos */
     backdrop-filter: blur(10px);
 
-    padding: 10px 0;
+    padding: 15px 0;
     border-bottom: 1px solid rgba(184, 156, 101, 0.2);
     transition: var(--transition);
+}
+
+.navbar-brand {
+    margin-right: 15px !important;
 }
 
 .logo-navbar {
@@ -130,7 +136,10 @@ body {
     width: 100%;
 }
 .navbar-nav .nav-link{
-    white-space: nowrap;
+    margin-left: 10px; /* Reduce esto de 8px a 10px según prefieras */
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap; /* Asegura que las palabras no se rompan */
 }
 /* ==========================
    MODULO IA

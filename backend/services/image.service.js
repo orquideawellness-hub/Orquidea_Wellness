@@ -1,194 +1,61 @@
 require("dotenv").config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const axios = require("axios");
-const FormData = require("form-data");
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-exports.generarImagen = async (tratamientos, resumen) => {
+exports.generarImagen = async (tratamientos, resumen, base64Image = null) => {
     try {
 
-        const tratamientosTexto = Array.isArray(tratamientos)
-    ? tratamientos.join(", ")
-    : String(tratamientos || "");
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash"
+        });
 
-let prompt = "";
+        const prompt = `
+Eres un editor de imágenes dermatológicas profesionales.
 
-if (tratamientosTexto.includes("Antiage")) {
+Tarea:
+Mejorar la apariencia de la piel del paciente manteniendo exactamente la misma persona.
 
-    prompt = `
-Luxury beauty clinic.
+Tratamientos aplicados:
+${tratamientos.join(", ")}
 
-Beautiful adult woman.
+Condición:
+${resumen}
 
-Younger-looking healthy skin.
-
-Professional anti-aging facial.
-
-Elegant spa.
-
-Natural beauty.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
+Instrucciones:
+- Mantén la identidad facial intacta
+- Mejora textura de piel
+- Reduce rojeces o imperfecciones
+- Resultado tipo clínica estética profesional
 `;
 
-} else if (tratamientosTexto.includes("Antiacné")) {
-
-    prompt = `
-Luxury beauty clinic.
-
-Beautiful adult woman.
-
-Clear healthy skin.
-
-Professional facial cleansing.
-
-Fresh natural beauty.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
-`;
-
-} else if (tratamientosTexto.includes("Pigmentación")) {
-
-    prompt = `
-Luxury beauty clinic.
-
-Beautiful adult woman.
-
-Even glowing skin tone.
-
-Professional facial treatment.
-
-Natural beauty.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
-`;
-
-} else if (tratamientosTexto.includes("Hydrafacial")) {
-
-    prompt = `
-Luxury beauty clinic.
-
-Professional hydrafacial.
-
-Hydrated glowing skin.
-
-Beautiful adult woman.
-
-Spa atmosphere.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
-`;
-
-} else if (tratamientosTexto.includes("Rosácea")) {
-
-    prompt = `
-Luxury beauty clinic.
-
-Beautiful adult woman.
-
-Healthy calm glowing skin.
-
-Professional facial skincare.
-
-Elegant spa.
-
-Natural beauty.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
-`;
-
-} else {
-
-    prompt = `
-Luxury beauty clinic.
-
-Beautiful adult woman.
-
-Healthy glowing skin.
-
-Professional skincare.
-
-Elegant spa.
-
-Ultra realistic photography.
-
-Soft lighting.
-
-4K.
-`;
-
-}
-
-        // ==========================
-        // FORM DATA
-        // ==========================
-        const form = new FormData();
-
-        form.append("prompt", prompt);
-        form.append("output_format", "png");
-
-        console.log("API KEY:", process.env.STABILITY_API_KEY?.slice(0, 12));
-        console.log("Prompt:", prompt);
-
-        const response = await axios.post(
-            "https://api.stability.ai/v2beta/stable-image/generate/core",
-            form,
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.STABILITY_API_KEY}`,
-                    Accept: "image/*",
-                    ...form.getHeaders()
-                },
-
-                responseType: "arraybuffer",
-
-                validateStatus: () => true
-            }
-        );
-
-        console.log("STATUS:", response.status);
-
-        if (response.status !== 200) {
-
-            console.log(
-                "STABILITY ERROR:",
-                Buffer.from(response.data).toString()
-            );
-
-            throw new Error("Error de Stability");
+        // 🔴 SI NO HAY IMAGEN, FALLBACK
+        if (!base64Image) {
+            return "https://placehold.co/600x800?text=Sin+Imagen";
         }
 
-        const base64 = Buffer
-            .from(response.data)
-            .toString("base64");
+        const result = await model.generateContent([
+            prompt,
+            {
+                inlineData: {
+                    data: base64Image,
+                    mimeType: "image/jpeg"
+                }
+            }
+        ]);
 
-        console.log("✅ Imagen generada correctamente");
+        const response = await result.response;
+        const text = response.text();
 
-        return `data:image/png;base64,${base64}`;
+        // Gemini devuelve instrucciones o descripción, no imagen directa
+        // (esto lo ajustamos después con endpoint de imagen si lo activas)
+
+        console.log("GEMINI RESPONSE:", text);
+
+        return "https://placehold.co/600x800?text=Gemini+OK";
 
     } catch (error) {
-
-        console.error("❌ IMAGE SERVICE:", error.message);
-
-        return "https://placehold.co/600x800?text=Sin+IA";
+        console.error("❌ GEMINI ERROR:", error.message);
+        return "https://placehold.co/600x800?text=Error";
     }
 };

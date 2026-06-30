@@ -64,7 +64,11 @@ exports.simulador = async (req, res) => {
     }
 
     // imagen simulada (esto está bien por ahora)
-    const imagen = await imageService.generarImagen(tratamientos, data.resumen);
+    const imagen = await imageService.generarImagen(
+    tratamientos,
+    data.resumen,
+    null
+);
 
     return res.json({
       ok: true,

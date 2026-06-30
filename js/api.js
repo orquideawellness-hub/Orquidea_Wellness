@@ -22,7 +22,7 @@ const API = {
     },
     async ejecutarSimulador(tratamientos) {
 
-        const response = await fetch("http://localhost:4000/api/ia/simulador", {
+        const response = await fetch("https://orquideawellness.onrender.com/api/ia/simulador", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

@@ -109,21 +109,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // =====================================================
-            // 🧬 SCORE CLÍNICO
+            // 🧬 SCORE CLÍNICO (CORREGIDO)
             // =====================================================
             if (resultado?.skinScore !== undefined) {
 
                 const scoreDiv = document.createElement("div");
 
-                scoreDiv.innerHTML = `
-                    <div class="alert alert-info mt-3">
-                        <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
-                        <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
-                        <small>Nivel clínico: ${resultado.metadata?.confidence || "media"}</small>
-                    </div>
-                `;
+                const confidenceRaw = resultado.metadata?.confidence;
 
-                recomendaciones.appendChild(scoreDiv);
+                // Normalización de confidence
+                let valoracion = "no disponible";
+
+                if (typeof confidenceRaw === "number") {
+                    if (confidenceRaw >= 0.8) valoracion = "alta";
+                    else if (confidenceRaw >= 0.5) valoracion = "media";
+                    else valoracion = "baja";
+                }
+                else if (typeof confidenceRaw === "string") {
+                    valoracion = confidenceRaw;
+                }
+
+                scoreDiv.innerHTML = `
+        <div class="alert alert-info mt-3">
+            <h5>🧬 Skin Score: ${resultado.skinScore}/100</h5>
+            <p><strong>Condición:</strong> ${resultado.labels?.join(", ") || "general"}</p>
+            <small>Valoración: ${valoracion}</small>
+        </div>
+    `;
+
+                document.getElementById("scoreContainer")?.appendChild(scoreDiv);
             }
 
             // =====================================================

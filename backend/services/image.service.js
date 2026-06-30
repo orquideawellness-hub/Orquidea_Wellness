@@ -1,8 +1,6 @@
 require("dotenv").config();
-const axios = require("axios");
 
-// 🔥 MODELO (puedes cambiarlo luego)
-const HF_MODEL = "black-forest-labs/FLUX.1-dev";
+const HF_MODEL = "stabilityai/stable-diffusion-xl-base-1.0";
 
 exports.generarImagen = async (tratamientos, resumen) => {
     try {
@@ -13,32 +11,38 @@ Professional dermatology skincare photography.
 Patient treatments: ${tratamientos.join(", ")}.
 Skin condition: ${resumen}.
 
-Ultra realistic clinic portrait, soft lighting, high detail, 4k, natural skin texture, before and after aesthetic.
+Ultra realistic, clinic lighting, high detail, 4k, portrait.
 `;
 
-        const response = await axios.post(
+        const response = await fetch(
             `https://api-inference.huggingface.co/models/${HF_MODEL}`,
             {
-                inputs: prompt
-            },
-            {
+                method: "POST",
                 headers: {
-                    Authorization: `Bearer ${process.env.HF_TOKEN}`,
+                    "Authorization": `Bearer ${process.env.HF_TOKEN}`,
                     "Content-Type": "application/json"
                 },
-                responseType: "arraybuffer"
+                body: JSON.stringify({
+                    inputs: prompt
+                })
             }
         );
 
         console.log("STATUS HF:", response.status);
 
-        const base64 = Buffer.from(response.data).toString("base64");
+        if (!response.ok) {
+            const err = await response.text();
+            console.log("HF ERROR:", err);
+            throw new Error(err);
+        }
+
+        const buffer = await response.arrayBuffer();
+        const base64 = Buffer.from(buffer).toString("base64");
 
         return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-        console.error("❌ HUGGING FACE ERROR:", error.response?.data || error.message);
-
+        console.error("❌ HF IMAGE ERROR:", error.message);
         return "https://placehold.co/600x800?text=Sin+IA";
     }
 };

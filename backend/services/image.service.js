@@ -1,5 +1,8 @@
 require("dotenv").config();
 
+const axios = require("axios");
+const FormData = require("form-data");
+
 exports.generarImagen = async (tratamientos, resumen) => {
     try {
 
@@ -9,47 +12,69 @@ exports.generarImagen = async (tratamientos, resumen) => {
 
         const prompt = `
 Fotografía dermatológica profesional ultra realista.
-Paciente con: ${tratamientosTexto}.
-Condición: ${resumen}.
-Iluminación clínica estética, piel realista, estilo before/after skincare.
+
+Paciente con tratamientos: ${tratamientosTexto}.
+
+Condición:
+${resumen}
+
+Iluminación clínica estética.
+Piel humana realista.
+Antes y después skincare.
+Alta calidad 4K.
 `;
 
-        // FormData nativo de Node.js 22
+        // ==========================
+        // FORM DATA
+        // ==========================
         const form = new FormData();
+
         form.append("prompt", prompt);
         form.append("output_format", "png");
 
-        console.log("FETCH:", fetch.toString().slice(0, 80));
-        console.log("FORMDATA:", FormData.toString().slice(0, 80));
+        console.log("API KEY:", process.env.STABILITY_API_KEY?.slice(0, 12));
+        console.log("Prompt:", prompt);
 
-        const response = await fetch(
+        const response = await axios.post(
             "https://api.stability.ai/v2beta/stable-image/generate/core",
+            form,
             {
-                method: "POST",
                 headers: {
                     Authorization: `Bearer ${process.env.STABILITY_API_KEY}`,
-                    Accept: "image/*"
+                    Accept: "image/*",
+                    ...form.getHeaders()
                 },
-                body: form
+
+                responseType: "arraybuffer",
+
+                validateStatus: () => true
             }
         );
 
         console.log("STATUS:", response.status);
 
-        const raw = await response.arrayBuffer();
+        if (response.status !== 200) {
 
-        if (!response.ok) {
-            const errorText = Buffer.from(raw).toString();
-            console.log("STABILITY ERROR:", errorText);
-            throw new Error(errorText);
+            console.log(
+                "STABILITY ERROR:",
+                Buffer.from(response.data).toString()
+            );
+
+            throw new Error("Error de Stability");
         }
 
-        const base64 = Buffer.from(raw).toString("base64");
+        const base64 = Buffer
+            .from(response.data)
+            .toString("base64");
+
+        console.log("✅ Imagen generada correctamente");
 
         return `data:image/png;base64,${base64}`;
 
     } catch (error) {
-        console.error("❌ IMAGE ERROR:", error.message);
+
+        console.error("❌ IMAGE SERVICE:", error.message);
+
         return "https://placehold.co/600x800?text=Sin+IA";
     }
 };

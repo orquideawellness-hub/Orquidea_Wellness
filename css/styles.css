@@ -104,7 +104,7 @@ body {
 
 .nav-link {
     color: var(--white) !important;
-    margin-left: 20px;
+    margin-left: 8px;
     font-weight: 400;
     font-size: 0.95rem;
     transition: var(--transition);
@@ -129,7 +129,9 @@ body {
 .nav-link:hover::after {
     width: 100%;
 }
-
+.navbar-nav .nav-link{
+    white-space: nowrap;
+}
 /* ==========================
    MODULO IA
 ========================== */
@@ -166,7 +168,7 @@ body {
 ========================== */
 .hero-section {
     background: var(--cream);
-    padding-top: 90px;
+    padding-top: 130px;
 }
 
 .hero-badge {
@@ -502,6 +504,9 @@ body.dark-mode .hero-section .text-muted {
 ========================== */
 @media (max-width:991px) {
 
+    .hero-section{
+        padding-top: 110px;
+    }
     .hero-title {
         font-size: 3rem;
         text-align: center;
@@ -524,6 +529,9 @@ body.dark-mode .hero-section .text-muted {
 
 @media (max-width:768px) {
 
+    .hero-section{
+        padding-top: 100px;
+    }
     .section-padding {
         padding: 70px 0;
     }
@@ -549,7 +557,7 @@ body.dark-mode .hero-section .text-muted {
 @media (max-width:576px) {
 
     .hero-section{
-        padding-top: 120px;
+        padding-top: 150px;
     }
     .hero-title {
         font-size: 2rem;

@@ -194,10 +194,11 @@ body {
 }
 
 .hero-title {
-    font-family: 'Cormorant Garamond', serif !important;
-    color: var(--olive) !important;
-    line-height: 1.1 !important; /* Aumentado para que no se encime */
-    font-size: 5rem !important;  /* Aumentado a 5rem para ver el impacto real */
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--olive);
+    line-height: 1.1; /* Aumentado para mayor legibilidad */
+    margin-top: 20px; /* Esto separará el título de la etiqueta superior */
+    font-size: 2.5rem;
 }
 
 .hero-text {

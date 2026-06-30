@@ -1,9 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     // ===============================
-    // VISTA PREVIA DE LA FOTO
+    // FOTO PREVIEW
     // ===============================
-
     const fotoInput = document.getElementById("fotoInput");
     const previewOriginal = document.getElementById("previewOriginal");
 
@@ -18,18 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===============================
-    // ELEMENTOS DEL SIMULADOR
+    // ELEMENTOS
     // ===============================
-
     const btnProbar = document.getElementById("btnProbar");
     const previewIA = document.getElementById("previewIA");
     const btnRecomendaciones = document.getElementById("btnRecomendaciones");
     const recomendaciones = document.getElementById("recomendaciones");
 
     // ===============================
-    // BOTÓN PROBAR
+    // ESTADO INICIAL (CLAVE)
     // ===============================
+    if (previewIA) previewIA.classList.add("d-none");
+    if (btnRecomendaciones) btnRecomendaciones.classList.add("d-none");
+    if (recomendaciones) recomendaciones.innerHTML = "";
 
+    // ===============================
+    // CLICK PROBAR
+    // ===============================
     if (btnProbar) {
         btnProbar.addEventListener("click", async () => {
 
@@ -47,27 +51,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 console.log("RESULTADO SIMULADOR:", resultado);
 
-                // IMAGEN
-                if (previewIA && resultado.imagen) {
+                // ===========================
+                // IMAGEN IA
+                // ===========================
+                if (resultado.imagen && previewIA) {
                     previewIA.src = resultado.imagen;
                     previewIA.classList.remove("d-none");
                 }
 
+                // ===========================
                 // RECOMENDACIONES
+                // ===========================
                 if (recomendaciones) {
+
                     recomendaciones.innerHTML = "";
 
-                    resultado.recomendaciones.forEach(r => {
-                        recomendaciones.innerHTML += `<li>${r}</li>`;
+                    resultado.recomendaciones.forEach(texto => {
+                        const li = document.createElement("li");
+                        li.textContent = texto;
+                        recomendaciones.appendChild(li);
                     });
                 }
 
+                // mostrar botón
                 if (btnRecomendaciones) {
                     btnRecomendaciones.classList.remove("d-none");
+                    btnRecomendaciones.textContent = "Ver sugerencias adicionales";
                 }
 
-            } catch (error) {
-                console.error(error);
+                // ocultar lista al inicio
+                if (recomendaciones) {
+                    recomendaciones.style.display = "none";
+                }
+
+            } catch (err) {
+                console.error(err);
                 alert("Error al ejecutar el simulador.");
             }
 
@@ -75,19 +93,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===============================
-    // MOSTRAR / OCULTAR RECOMENDACIONES
+    // TOGGLE RECOMENDACIONES
     // ===============================
-
     if (btnRecomendaciones && recomendaciones) {
         btnRecomendaciones.addEventListener("click", () => {
 
-            if (recomendaciones.style.display === "none") {
-                recomendaciones.style.display = "block";
-                btnRecomendaciones.textContent = "Ocultar sugerencias";
-            } else {
-                recomendaciones.style.display = "none";
-                btnRecomendaciones.textContent = "Ver sugerencias adicionales";
-            }
+            const oculto = recomendaciones.style.display === "none";
+
+            recomendaciones.style.display = oculto ? "block" : "none";
+
+            btnRecomendaciones.textContent = oculto
+                ? "Ocultar sugerencias"
+                : "Ver sugerencias adicionales";
 
         });
     }

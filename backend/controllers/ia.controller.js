@@ -1,4 +1,5 @@
 const service = require("../services/ia.service");
+const imageService = require("../services/image.service");
 
 exports.chat = async (req, res) => {
   try {
@@ -63,7 +64,7 @@ exports.simulador = async (req, res) => {
     }
 
     // imagen simulada (esto está bien por ahora)
-    const imagen = "https://placehold.co/600x800?text=" + encodeURIComponent(tratamientos.join("+"));
+    const imagen = await imageService.generarImagen(tratamientos, data.resumen);
 
     return res.json({
       ok: true,

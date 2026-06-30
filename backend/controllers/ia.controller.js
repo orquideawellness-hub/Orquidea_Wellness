@@ -1,46 +1,26 @@
 const service = require("../services/ia.service");
 
 exports.chat = async (req, res) => {
-
   try {
     const { mensaje } = req.body;
 
     if (!mensaje) {
-      return res.status(400).json({
-        ok: false,
-        error: "Mensaje vacío"
-      });
+      return res.status(400).json({ ok: false, error: "Mensaje vacío" });
     }
 
     const respuesta = await service.generarRespuesta(mensaje);
 
-    if (!respuesta) {
-      return res.status(500).json({
-        ok: false,
-        error: "Respuesta vacía de IA"
-      });
-    }
-
-    return res.json({
+    res.json({
       ok: true,
       data: respuesta
     });
 
   } catch (error) {
-
     console.error("Error IA:", error);
-
-    return res.status(500).json({
-      ok: false,
-      error: "Error en IA"
-    });
+    res.status(500).json({ ok: false, error: "Error en IA" });
   }
 };
 
-
-// =====================================================
-// 🧠 SIMULADOR IA (CORREGIDO Y ROBUSTO)
-// =====================================================
 exports.simulador = async (req, res) => {
 
   try {
@@ -56,14 +36,34 @@ exports.simulador = async (req, res) => {
 
     const respuestaIA = await service.generarSimulacion(tratamientos);
 
-    const jsonLimpio = respuestaIA
-      .replace(/```json/g, "")
-      .replace(/```/g, "")
-      .trim();
+    console.log("RAW IA:", respuestaIA);
 
-    const data = JSON.parse(jsonLimpio);
+    // 🔴 EXTRAER JSON SIN ROMPERSE
+    const inicio = respuestaIA.indexOf("{");
+    const fin = respuestaIA.lastIndexOf("}");
 
-    const imagen = await service.generarImagenSimulada(tratamientos, data.resumen);
+    if (inicio === -1 || fin === -1) {
+      return res.status(500).json({
+        ok: false,
+        error: "La IA no devolvió JSON válido"
+      });
+    }
+
+    const jsonLimpio = respuestaIA.substring(inicio, fin + 1);
+
+    let data;
+
+    try {
+      data = JSON.parse(jsonLimpio);
+    } catch (e) {
+      return res.status(500).json({
+        ok: false,
+        error: "Error parseando JSON de IA"
+      });
+    }
+
+    // imagen simulada (esto está bien por ahora)
+    const imagen = "https://placehold.co/600x800?text=" + encodeURIComponent(tratamientos.join("+"));
 
     return res.json({
       ok: true,

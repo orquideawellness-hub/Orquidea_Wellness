@@ -112,7 +112,7 @@ body {
     color: var(--white) !important;
     margin-left: 6px;
     font-weight: 350;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     transition: var(--transition);
 }
 

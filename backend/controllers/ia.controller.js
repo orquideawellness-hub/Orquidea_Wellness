@@ -21,7 +21,7 @@ exports.chat = async (req, res) => {
       });
     }
 
-    res.json({
+    return res.json({
       ok: true,
       data: respuesta
     });
@@ -30,13 +30,17 @@ exports.chat = async (req, res) => {
 
     console.error("Error IA:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       ok: false,
       error: "Error en IA"
     });
   }
 };
 
+
+// =====================================================
+// 🧠 SIMULADOR IA (CORREGIDO Y ROBUSTO)
+// =====================================================
 exports.simulador = async (req, res) => {
 
   try {
@@ -50,28 +54,74 @@ exports.simulador = async (req, res) => {
       });
     }
 
-    // 1. IA análisis
+    // ===============================
+    // 1. IA: análisis
+    // ===============================
     const respuestaIA = await service.generarSimulacion(tratamientos);
 
-    const jsonLimpio = respuestaIA
+    if (!respuestaIA) {
+      return res.status(500).json({
+        ok: false,
+        error: "La IA no devolvió respuesta"
+      });
+    }
+
+    // ===============================
+    // 2. LIMPIEZA ROBUSTA
+    // ===============================
+    let jsonLimpio = respuestaIA
       .replace(/```json/g, "")
       .replace(/```/g, "")
       .trim();
 
-    const data = JSON.parse(jsonLimpio);
+    // extraer solo JSON real
+    const match = jsonLimpio.match(/\{[\s\S]*\}/);
 
-    // 2. 🔴 AQUÍ FALTA TU PIEZA CLAVE (IMAGEN IA)
-    // esto NO lo tienes aún implementado
-    const imagenGenerada = await service.generarImagenSimulada(tratamientos, data.resumen);
+    if (!match) {
+      console.error("❌ IA inválida:", respuestaIA);
 
+      return res.status(500).json({
+        ok: false,
+        error: "La IA no devolvió JSON válido"
+      });
+    }
+
+    let data;
+
+    try {
+      data = JSON.parse(match[0]);
+    } catch (err) {
+
+      console.error("❌ Error parseando JSON:", respuestaIA);
+
+      return res.status(500).json({
+        ok: false,
+        error: "Error interpretando respuesta IA"
+      });
+    }
+
+    // ===============================
+    // 3. IMAGEN (SIMULADA O FUTURA IA VISUAL)
+    // ===============================
+    const imagenGenerada = await service.generarImagenSimulada?.(
+      tratamientos,
+      data.resumen
+    ) || "https://placehold.co/600x800?text=Resultado+IA";
+
+    // ===============================
+    // 4. RESPUESTA FINAL
+    // ===============================
     return res.json({
       ok: true,
       imagen: imagenGenerada,
-      recomendaciones: data.recomendaciones
+      recomendaciones: data.recomendaciones || [],
+      resumen: data.resumen || ""
     });
 
   } catch (error) {
-    console.error(error);
+
+    console.error("Error Simulador:", error);
+
     return res.status(500).json({
       ok: false,
       error: "Error en simulador IA"

@@ -162,7 +162,7 @@ exports.simulador = async (req, res) => {
     form.append('tratamiento', JSON.stringify(tratamientos));
 
     // 2. Enviamos la foto al servidor de Python (IA Real)
-    const responseIA = await axios.post('http://localhost:8000/procesar-simulacion', form, {
+    const responseIA = await axios.post('https://orquidea-wellness-ia-py.onrender.com/procesar-simulacion', form, {
       headers: form.getHeaders()
     });
 

@@ -1,6 +1,8 @@
 const service = require("../services/ia.service");
 const imageService = require("../services/image.service");
 const sharp = require("sharp");
+const axios = require("axios");
+const FormData = require("form-data");
 
 // =====================================================
 // CHAT IA
@@ -35,7 +37,7 @@ exports.chat = async (req, res) => {
 // =====================================================
 // SIMULADOR CLÍNICO PRO
 // =====================================================
-exports.simulador = async (req, res) => {
+/*exports.simulador = async (req, res) => {
   try {
     // Parseo de tratamientos (maneja tanto JSON directo como FormData)
     const tratamientos = typeof req.body.tratamientos === 'string'
@@ -142,5 +144,43 @@ exports.simulador = async (req, res) => {
   } catch (error) {
     console.error("ERROR SIMULADOR PRO:", error);
     return res.status(500).json({ ok: false, error: "Error en simulador clínico PRO" });
+  }
+};
+*/
+exports.simulador = async (req, res) => {
+  try {
+    const tratamientos = typeof req.body.tratamientos === 'string'
+      ? JSON.parse(req.body.tratamientos)
+      : req.body.tratamientos;
+    const file = req.file;
+
+    if (!file) return res.status(400).json({ ok: false, error: "No se subió imagen" });
+
+    // 1. Preparamos el FormData para enviarlo a Python
+    const form = new FormData();
+    form.append('foto', file.buffer, { filename: 'paciente.jpg' });
+    form.append('tratamiento', JSON.stringify(tratamientos));
+
+    // 2. Enviamos la foto al servidor de Python (IA Real)
+    const responseIA = await axios.post('http://localhost:8000/procesar-simulacion', form, {
+      headers: form.getHeaders()
+    });
+
+    // 3. Recibimos la respuesta de la IA
+    const dataIA = responseIA.data;
+
+    // 4. Respondemos a tu frontend con la imagen procesada por la IA
+    return res.json({
+      ok: true,
+      imagenAntes: `data:image/jpeg;base64,${file.buffer.toString("base64")}`,
+      imagenDespues: dataIA.imagen_url,
+      skinScore: dataIA.skinScore, // Viene de Python
+      condicion: dataIA.condicion, // Viene de Python
+      recomendaciones: dataIA.recomendaciones // Vienen de Python
+    });
+
+  } catch (error) {
+    console.error("❌ ERROR EN EL PUENTE IA:", error.message);
+    return res.status(500).json({ ok: false, error: "Error de comunicación con el motor de IA" });
   }
 };

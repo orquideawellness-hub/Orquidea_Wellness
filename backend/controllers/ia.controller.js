@@ -176,6 +176,8 @@ exports.simulador = async (req, res) => {
       imagenDespues: dataIA.imagen_url,
       skinScore: dataIA.skinScore, // Viene de Python
       condicion: dataIA.condicion, // Viene de Python
+      valoracion: dataIA.valoracion,   
+      edadAparente: dataIA.edadAparente,
       recomendaciones: dataIA.recomendaciones // Vienen de Python
     });
 

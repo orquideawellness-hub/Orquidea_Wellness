@@ -61,12 +61,12 @@ body.dark-mode .mascota-burbuja {
         margin-bottom: 100px !important;
     }
     .mascota-contenedor { 
-        width: 100px; 
+        width: 150px; 
         bottom: -125px;      /* Más arriba en móviles para que no se desplace de la vista */
         right: 15px; 
     }
     .mascota-burbuja {
-        font-size: 10px;
+        font-size: 11px;
         top: -36px;
     }
 }

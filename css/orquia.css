@@ -112,6 +112,7 @@ body.dark-mode .chat-input input::placeholder{
 
 }
 /* Corrección para que el menú móvil no desborde */
+/*
 @media (max-width: 991px) {
     .navbar-collapse {
         padding: 15px;
@@ -127,7 +128,7 @@ body.dark-mode .chat-input input::placeholder{
     .navbar-nav .nav-item {
         margin: 5px 0;
     }
-
++/
     /* Asegurar que el botón de dark mode esté centrado en móvil */
     #darkModeBtn {
         margin-top: 10px;

@@ -4,7 +4,7 @@
 .mascota-contenedor {
     position: absolute;
     bottom: -122px;          /* Separación del borde inferior */
-    right: 30px;           /* Separación del borde derecho */
+    right: 45px;           /* Separación del borde derecho */
     width: 145px;          /* Tamaño ideal en escritorio */
     height: auto;
     cursor: pointer;

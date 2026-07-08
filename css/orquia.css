@@ -15,7 +15,6 @@
 .chat-header {
     text-align: center;
     margin-bottom: 20px;
-    color: var(--olive);
     font-family: 'Cormorant Garamond', serif;
 }
 
@@ -115,7 +114,6 @@ body.dark-mode .chat-input input::placeholder{
 /* Corrección para que el menú móvil no desborde */
 @media (max-width: 991px) {
     .navbar-collapse {
-        background-color: var(--olive); /* O el color de fondo que prefieras para el menú */
         padding: 15px;
         border-radius: 8px;
         margin-top: 10px;
@@ -139,6 +137,6 @@ body.dark-mode .chat-input input::placeholder{
 }
 
 /* Evitar desbordamiento global en móviles */
-body {
+/*body {
     overflow-x: hidden;
-}
+}*/

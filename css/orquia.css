@@ -49,18 +49,24 @@
   color: var(--text);
 }
 
-/* INPUT CHAT */
 .chat-input {
-  display: flex;
-  gap: 10px;
-  width:100%;
+    display: flex;
+    gap: 8px; /* Reducimos el espacio */
+    width: 100%;
+    align-items: center; /* Alinea botón e input al centro */
 }
 
 .chat-input input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
+    flex: 1;
+    min-width: 0; /* ESTO ES CLAVE: permite que el input se encoja sin romper el layout */
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.chat-input button {
+    flex-shrink: 0; /* ESTO ES CLAVE: evita que el botón se encoja o desaparezca */
+    padding: 10px 15px;
 }
 /* ==========================
    ORQUIA - DARK MODE
@@ -94,8 +100,17 @@ body.dark-mode .chat-input input{
 body.dark-mode .chat-input input::placeholder{
     color:#bdbdbd;
 }
+/* Fuerza al menú a no colapsar si el ancho es muy pequeño */
+@media (max-width: 991px) {
+    .navbar-toggler {
+        display: block !important; /* Asegura visibilidad */
+    }
+}
 @media (max-width:576px){
 
+    .navbar-toggler {
+        display: block !important; /* Asegura visibilidad */
+    }
     .chat-container{
         max-width:100%;
         padding:20px 15px;
@@ -111,33 +126,3 @@ body.dark-mode .chat-input input::placeholder{
     }
 
 }
-/* Corrección para que el menú móvil no desborde */
-/*
-@media (max-width: 991px) {
-    .navbar-collapse {
-        padding: 15px;
-        border-radius: 8px;
-        margin-top: 10px;
-    }
-    
-    .navbar-nav {
-        text-align: center;
-        width: 100%;
-    }
-    
-    .navbar-nav .nav-item {
-        margin: 5px 0;
-    }
-+/
- /*   /* Asegurar que el botón de dark mode esté centrado en móvil */
- /*   #darkModeBtn {
-        margin-top: 10px;
-        display: block;
-        width: 100%;
-    }
-}
-
-/* Evitar desbordamiento global en móviles */
-/*body {
-    overflow-x: hidden;
-}*/

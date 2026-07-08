@@ -129,8 +129,8 @@ body.dark-mode .chat-input input::placeholder{
         margin: 5px 0;
     }
 +/
-    /* Asegurar que el botón de dark mode esté centrado en móvil */
-    #darkModeBtn {
+ /*   /* Asegurar que el botón de dark mode esté centrado en móvil */
+ /*   #darkModeBtn {
         margin-top: 10px;
         display: block;
         width: 100%;

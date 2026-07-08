@@ -80,7 +80,8 @@ body {
 }
 
 .navbar-brand {
-    margin-right: 9px !important;
+    margin-right: 10px !important;
+    margin-left: 30px !important;
 }
 
 .logo-navbar {

@@ -1,0 +1,148 @@
+.chat-container {
+    margin-bottom: 130px !important; 
+}
+.mascota-contenedor {
+    position: absolute;
+    bottom: -92px;          /* Separación del borde inferior */
+    right: 30px;           /* Separación del borde derecho */
+    width: 115px;          /* Tamaño ideal en escritorio */
+    height: auto;
+    cursor: pointer;
+    z-index: 99;          /* Flota por encima de todo */
+    animation: levitacionOrganica 4s ease-in-out infinite; 
+}
+
+.mascota-img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.12));
+    transition: transform 0.2s ease-in-out;
+}
+
+.mascota-contenedor:hover .mascota-img {
+    transform: scale(1.15); /* Se agranda sutilmente al pasar el mouse */
+}
+
+.mascota-burbuja {
+    position: absolute;
+    top: -45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #333333;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f1f2f6;
+    z-index: 100;
+}
+
+/* Integración nativa con tu modo oscuro */
+body.dark-mode .mascota-burbuja {
+    background-color: #2d333b;
+    color: #f5f5f5;
+    border: 1px solid #444;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.d-none { display: none !important; }
+
+@keyframes levitacionOrganica {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); } /* Sube y baja suavemente */
+}
+
+/* 📱 Ajustes responsivos en perfecta sincronía con tu orquia.css */
+@media (max-width: 576px) {
+    .chat-container {
+        margin-bottom: 100px !important;
+    }
+    .mascota-contenedor { 
+        width: 80px; 
+        bottom: -82px;      /* Más arriba en móviles para que no se desplace de la vista */
+        right: 15px; 
+    }
+    .mascota-burbuja {
+        font-size: 10px;
+        top: -36px;
+    }
+}
+
+/* =========================================
+   🚶‍♀️ ANIMACIONES DE CAMINATA Y DESPEDIDA
+   ========================================= */
+
+/* 1. Bucle para caminar de derecha a izquierda */
+@keyframes caminarLadoALado {
+    0% { right: 30px; }
+    50% { right: calc(100% - 140px); } /* Viaja hasta el borde izquierdo */
+    100% { right: 30px; }
+}
+
+/* 2. Voltea SOLAMENTE la imagen en la dirección correcta */
+@keyframes voltearImagen {
+    0%, 49.9% { 
+        transform: scaleX(-1); /* Camina de derecha a izquierda: se voltea para mirar a la izq */
+    } 
+    50%, 100% { 
+        transform: scaleX(1);  /* Regresa de izquierda a derecha: recupera su orientación original */
+    }
+}
+
+/* Clases que inyectaremos con JavaScript */
+.modo-caminando {
+    animation: levitacionOrganica 4s ease-in-out infinite, caminarLadoALado 28s linear infinite !important;
+}
+
+.modo-caminando .mascota-img {
+    animation: voltearImagen 28s linear infinite;
+}
+
+/* 3. Efecto de despedida (Se va a la derecha y se desvanece) */
+@keyframes salidaDerecha {
+    0% { transform: translateX(0); opacity: 1; }
+    100% { transform: translateX(250px); opacity: 0; }
+}
+
+.mascota-despedida {
+    animation: salidaDerecha 3.5s ease-in forwards !important; /* forwards la deja invisible al final */
+}
+
+/* 4. Estilos para el nuevo botoncito */
+.btn-caminar-toggle {
+    background-color: transparent;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.btn-caminar-toggle:hover {
+    background-color: #f1f2f6;
+}
+
+/* Modo oscuro para el botón extra */
+body.dark-mode .btn-caminar-toggle {
+    border-color: #555;
+}
+body.dark-mode .btn-caminar-toggle:hover {
+    background-color: #444;
+}
+/* =========================================
+   ⏸️ ESTADOS DE PAUSA PARA LA CAMINATA
+   ========================================= */
+
+.modo-caminando.pausado {
+    /* La 1ra animación (levitación) sigue corriendo, la 2da (caminar) se pausa */
+    animation-play-state: running, paused !important;
+}
+
+.modo-caminando.pausado .mascota-img {
+    /* Pausa la rotación para que se quede mirando a donde iba */
+    animation-play-state: paused !important;
+}

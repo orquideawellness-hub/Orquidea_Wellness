@@ -1,5 +1,6 @@
 .chat-container {
-  max-width: 900px;
+    position: relative;
+    max-width: 900px;
     margin: auto;
     padding: 30px;
     

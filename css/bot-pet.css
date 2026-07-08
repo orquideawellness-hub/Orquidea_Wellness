@@ -5,7 +5,7 @@
     position: absolute;
     bottom: -92px;          /* Separación del borde inferior */
     right: 30px;           /* Separación del borde derecho */
-    width: 115px;          /* Tamaño ideal en escritorio */
+    width: 145px;          /* Tamaño ideal en escritorio */
     height: auto;
     cursor: pointer;
     z-index: 99;          /* Flota por encima de todo */

@@ -62,7 +62,7 @@ body.dark-mode .mascota-burbuja {
     }
     .mascota-contenedor { 
         width: 150px; 
-        bottom: -175px;      /* Más arriba en móviles para que no se desplace de la vista */
+        bottom: -200px;      /* Más arriba en móviles para que no se desplace de la vista */
         right: 15px; 
     }
     .mascota-burbuja {
